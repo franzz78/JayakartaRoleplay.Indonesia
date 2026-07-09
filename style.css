@@ -9,3 +9,43 @@ header { display: flex; justify-content: space-between; padding: 20px; backgroun
 @keyframes spin { 100% { transform: rotate(360deg); } }
 button { padding: 15px 30px; cursor: pointer; background: #444; color: #fff; border: none; border-radius: 5px; }
 
+/* --- TAMBAHAN BAGIAN BAWAH: ANIMASI & VINYL --- */
+
+/* Container Piringan Hitam */
+.vinyl-container {
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animasi Piringan Hitam Berputar */
+.rotate {
+    width: 120px;
+    height: 120px;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Vinyl_record.svg/1024px-Vinyl_record.svg.png') center/cover;
+    border-radius: 50%;
+    margin: 20px auto;
+    border: 4px solid #333;
+    animation: spin 5s linear infinite;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Keyframe Animasi Putar */
+@keyframes spin { 
+    100% { transform: rotate(360deg); } 
+}
+
+/* Animasi saat elemen muncul (Fade Up) */
+[data-aos="fade-up"] {
+    transition-property: opacity, transform;
+    transition-duration: 0.8s;
+}
+
+/* Efek Hover pada Tombol Utama agar lebih hidup */
+.btn-main:hover {
+    background: #ff5e5e;
+    transform: scale(1.02);
+    transition: 0.3s;
+}

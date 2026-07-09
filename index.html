@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jayakarta Roleplay, Indonesia</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1dlYnNpdGUvTG9nb19XZWJzaXRlL2ZpbGVfMDAwMDAwMDBhODI4NzIwN2I2NjY0ZmE2ZmZlYjEwYjQucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MzYyNzk5MSwiZXhwIjozMTcxNDM2Mjc5OTF9.ootUTUG8Vev9krxybESOGS_ITGM1HABdNqdb0B4pTdo" alt="Logo">
+            <div>
+                <h3>[ID] Jayakarta Roleplay, Indonesia</h3>
+                <p>Official Website Jayakarta Roleplay, Indonesia</p>
+            </div>
+        </div>
+        <button id="menu-btn">☰</button>
+    </header>
+
+    <nav id="navbar" class="hidden">
+        <ul>
+            <li onclick="loadPage('profile')">Profile Community</li>
+            <li onclick="loadPage('pejabat')">Profile Pejabat Negara</li>
+            <li onclick="loadPage('sejarah')">Sejarah Community</li>
+            <li onclick="loadPage('images')">Images Public</li>
+            <li onclick="loadPage('media')">Media Information</li>
+            <li onclick="loadPage('development')">Media Development</li>
+            <li onclick="loadPage('pemerintahan')">Media Pemerintahan</li>
+            <li onclick="loadPage('discord')">Media Discord</li>
+            <li onclick="loadPage('umum')">Media Umum</li>
+            <li onclick="loadPage('admin')">Administrator</li>
+        </ul>
+    </nav>
+
+    <main id="app-container">
+        <div id="content" data-aos="fade-up">
+            <h1>Selamat Datang di Jayakarta Roleplay</h1>
+            <div id="vinyl" class="rotate"></div>
+            <button id="btn-join">Join Komunitas</button>
+        </div>
+    </main>
+
+    <script type="module" src="script.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+</body>
+</html>

@@ -1,9 +1,16 @@
 {
-  "name": "Jayakarta Roleplay",
-  "short_name": "JRPI",
-  "start_url": "index.html",
+  "short_name": "JayakartaRP",
+  "name": "Jayakarta Roleplay Indonesia Website",
+  "icons": [
+    {
+      "src": "https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1dlYnNpdGUvTG9nb19XZWJzaXRlL2ZpbGVfMDAwMDAwMDBhODI4NzIwN2I2NjY0ZmE2ZmZlYjEwYjQucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MzYyOTkzMSwiZXhwIjoxODE1MTY1OTMxfQ.NZPtNsKi7eNmGuSrfNngVL-WJX2fE8m1X92WXkrYoTM",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/index.html",
+  "background_color": "#0a0a0a",
+  "theme-color": "#121212",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000"
+  "orientation": "portrait"
 }
-

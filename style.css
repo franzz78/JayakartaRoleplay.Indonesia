@@ -49,3 +49,83 @@ button { padding: 15px 30px; cursor: pointer; background: #444; color: #fff; bor
     transform: scale(1.02);
     transition: 0.3s;
 }
+
+/* --- TAMPILAN MEWAH & GLASSMORPHISM --- */
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.glass-card {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.glitch-text {
+    font-size: 2.5rem;
+    letter-spacing: 5px;
+    background: linear-gradient(to right, #ff3e3e, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #888;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    margin-bottom: 30px;
+}
+
+.btn-glow {
+    background: transparent;
+    border: 2px solid #ff3e3e;
+    color: #ff3e3e;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: 0.4s;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.btn-glow:hover {
+    background: #ff3e3e;
+    color: white;
+    box-shadow: 0 0 20px #ff3e3e;
+}
+
+.vinyl-record {
+    width: 150px;
+    height: 150px;
+    background: #000;
+    border-radius: 50%;
+    border: 8px solid #222;
+    margin: 40px auto;
+    position: relative;
+    animation: spin 8s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inner-circle {
+    width: 40px;
+    height: 40px;
+    background: #ff3e3e;
+    border-radius: 50%;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }

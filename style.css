@@ -1,0 +1,11 @@
+body { background: linear-gradient(135deg, #000, #222); color: #fff; font-family: sans-serif; margin: 0; }
+header { display: flex; justify-content: space-between; padding: 20px; background: rgba(0,0,0,0.8); }
+.brand { display: flex; align-items: center; gap: 15px; }
+.brand img { width: 50px; border-radius: 50%; }
+#navbar { position: absolute; right: 0; top: 80px; background: #1a1a1a; width: 200px; padding: 20px; border-radius: 10px; }
+.hidden { display: none; }
+#app-container { padding: 50px; text-align: center; }
+.rotate { width: 150px; height: 150px; background: #333; border-radius: 50%; margin: 30px auto; animation: spin 5s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
+button { padding: 15px 30px; cursor: pointer; background: #444; color: #fff; border: none; border-radius: 5px; }
+

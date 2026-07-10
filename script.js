@@ -1,4 +1,7 @@
-// FIREBASE REAL-TIME CONFIGURATION DATA DARI REQUEST USER
+// ==========================================================================
+// CENTRAL DATABASE CONFIGURATION ENGINE (FIREBASE CONNECTION)
+// ==========================================================================
+// Kunci Konfigurasi Asli Milik Server Absensi Polri (TIDAK BOLEH DIHAPUS)
 const firebaseConfig = {
   apiKey: "AIzaSyD9BmV4XKXuMWa4PZHpb7Bbt-rHs61m3lE",
   databaseURL: "https://absensi-polri-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -8,356 +11,443 @@ const firebaseConfig = {
   appId: "1:19006760644:web:b980f54aea123e92ed4b91"
 };
 
-// Validasi & Inisialisasi Firebase Engine
+// Inisialisasi Aplikasi Server Utama Firebase
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 const db = firebase.database();
 
-// Application Global State Control Variables
-let isAdminAuthenticated = false;
-let globalAudio = new Audio();
-globalAudio.loop = true;
-let isMuted = true;
+// State System Global Object Virtual Memory
+let statusSesiAdmin = false;
 
-// DOM Element References Navigation Drawer
-const menuToggle = document.getElementById('menuToggle');
-const sidebar = document.getElementById('sidebar');
-const closeBtn = document.getElementById('closeBtn');
+// ==========================================================================
+// DISCORD EMBED LOGIC ENGINE: ANNOUNCEMENT GOVERNMENT
+// ==========================================================================
 
-menuToggle.addEventListener('click', () => sidebar.classList.add('open'));
-closeBtn.addEventListener('click', () => sidebar.classList.remove('open'));
-
-// Switch View Engine Controller (Ganti Menu)
-function switchView(viewId) {
-    sidebar.classList.remove('open');
-    const sections = document.querySelectorAll('main section');
-    sections.forEach(sec => {
-        sec.classList.remove('view-active');
-        sec.classList.add('view-hidden');
-    });
-
-    const activeSec = document.getElementById(`view-${viewId}`);
-    if(activeSec) {
-        activeSec.classList.remove('view-hidden');
-        activeSec.classList.add('view-active');
-        window.scrollTo({top: 0, behavior: 'smooth'});
-        triggerScrollAnimation();
-    }
-}
-
-// SweetAlert2 Toast Global Engine Notification
-function toastNotification(title, icon = 'success') {
-    Swal.fire({
-        title: title,
-        icon: icon,
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        background: '#141414',
-        color: '#ffffff',
-        iconColor: icon === 'success' ? '#ffffff' : '#d9534f'
-    });
-}
-
-// --- SECURE ADMINISTRATOR CONTROL AUTHENTICATION ---
-function loginAdmin() {
-    if(isAdminAuthenticated) {
-        switchView('admin');
+// 1. Ambil & Render Pengumuman Pemerintah ke Halaman Pengunjung (Urutan Terbaru di Atas)
+db.ref('gov_announcements').on('value', (snapshot) => {
+    const containerUser = document.getElementById('ctx-gov-announce');
+    const containerAdmin = document.getElementById('adm-list-gov');
+    
+    if (containerUser) containerUser.innerHTML = "";
+    if (containerAdmin) containerAdmin.innerHTML = "";
+    
+    if (!snapshot.exists()) {
+        if (containerUser) containerUser.innerHTML = `<div class="card-body">Belum ada pengumuman resmi yang diterbitkan saat ini.</div>`;
         return;
     }
 
-    Swal.fire({
-        title: 'Verifikasi Administrator',
-        text: 'Masukkan Username/Token Akses Keamanan Panel:',
-        input: 'password',
-        inputPlaceholder: 'Token Akses...',
-        showCancelButton: true,
-        confirmButtonText: 'Masuk Panel',
-        cancelButtonText: 'Batal',
-        background: '#141414',
-        color: '#ffffff',
-        confirmButtonColor: '#444444',
-        cancelButtonColor: '#222222'
-    }).then((result) => {
-        if (result.value === 'JayakartaRPID#2026') {
-            isAdminAuthenticated = true;
-            toastNotification('Akses Valid! Selamat Datang Admin.');
-            switchView('admin');
-        } else if(result.isConfirmed) {
-            Swal.fire({ icon: 'error', title: 'Akses Ditolak!', text: 'Token Kunci Administrator Tidak Sah.', background: '#141414', color: '#ffffff' });
+    let listPengumuman = [];
+    snapshot.forEach((child) => {
+        listPengumuman.push({ id: child.key, ...child.val() });
+    });
+
+    // Urutkan berdasarkan waktu rilis terbaru (Descending)
+    listPengumuman.sort((a, b) => b.timestamp - a.timestamp);
+
+    listPengumuman.forEach((data) => {
+        let classGayaTeks = data.style === 'code' ? 'msg-code' : 'msg-tebal';
+
+        // Tampilkan di Sisi Pengunjung Umum
+        if (containerUser) {
+            containerUser.innerHTML += `
+                <div class="embed-gov-card">
+                    <span class="embed-role-tag"><i class="fa-solid fa-at"></i> ${escapeHTML(data.role)}</span>
+                    <div class="embed-title-gov">Announcement Government</div>
+                    <div class="${classGayaTeks}">${escapeHTML(data.text)}</div>
+                    <div class="embed-footer-gov">@[ID] Jayakarta Roleplay, Indonesia - 2026</div>
+                </div>
+            `;
         }
-    });
-}
 
-function logoutAdmin() {
-    isAdminAuthenticated = false;
-    toastNotification('Keluar dari panel admin', 'info');
-    switchView('home');
-}
-
-// --- CORE BACKSOUND MUSIC PLAYER ENGINE SOUND SYSTEM ---
-function toggleAudioGlobal() {
-    const disk = document.getElementById('vinylDisk');
-    const status = document.querySelector('.vinyl-status');
-    
-    if (isMuted) {
-        globalAudio.play().then(() => {
-            isMuted = false;
-            disk.classList.add('spinning');
-            status.innerText = "Playing";
-        }).catch(() => {
-            toastNotification('Klik layar sekali lagi agar Browser mengizinkan audio', 'warning');
-        });
-    } else {
-        globalAudio.pause();
-        isMuted = true;
-        disk.classList.remove('spinning');
-        status.innerText = "Mute";
-    }
-}
-
-// Realtime Listener Untuk Musik Global Yang Diatur Admin
-db.ref('global_audio_url').on('value', snap => {
-    const url = snap.val();
-    if(url) {
-        document.getElementById('adm-audio-url').value = url;
-        globalAudio.src = url;
-        globalAudio.load();
-        if(!isMuted) {
-            globalAudio.play().catch(()=>{});
-        }
-    }
-});
-
-function updateGlobalAudio() {
-    const url = document.getElementById('adm-audio-url').value;
-    if(!url) return toastNotification('URL Link Audio Tidak Boleh Kosong!', 'error');
-    db.ref('global_audio_url').set(url, err => {
-        if(!err) toastNotification('Musik Global Sinkron Berhasil Diubah!');
-    });
-}
-
-// --- DATA BINDING SYNC DYNAMIC COMPONENT FIREBASE ---
-
-// 1. Sinkronisasi Data Teks Profile & Sejarah Komunitas
-db.ref('text_data').on('value', snap => {
-    const data = snap.val() || { profile_comm: "Data profile belum diisi oleh Admin.", sejarah: "Data sejarah belum diisi oleh Admin." };
-    document.getElementById('ctx-profile-comm').innerText = data.profile_comm;
-    document.getElementById('ctx-sejarah').innerText = data.sejarah;
-    
-    document.getElementById('adm-prof-comm').value = data.profile_comm;
-    document.getElementById('adm-sejarah').value = data.sejarah;
-});
-
-function updateTextData() {
-    const pComm = document.getElementById('adm-prof-comm').value;
-    const sej = document.getElementById('adm-sejarah').value;
-    db.ref('text_data').set({ profile_comm: pComm, sejarah: sej }, err => {
-        if(!err) toastNotification('Data deskripsi teks utama berhasil disimpan');
-    });
-}
-
-// 2. Sinkronisasi Data Profil Pejabat Negara [Bisa Ditambah Tanpa Batas]
-db.ref('pejabat').on('value', snap => {
-    const container = document.getElementById('ctx-pejabat');
-    const admList = document.getElementById('adm-list-pejabat');
-    container.innerHTML = '';
-    admList.innerHTML = '';
-    
-    snap.forEach(child => {
-        const key = child.key;
-        const val = child.val();
-        
-        container.innerHTML += `
-            <div class="pejabat-card scroll-anim">
-                <img src="${val.img || 'https://via.placeholder.com/150'}" class="pejabat-img" alt="Foto">
-                <div class="pejabat-role">${val.jabatan}</div>
-                <div class="pejabat-name">${val.nama}</div>
-            </div>
-        `;
-
-        admList.innerHTML += `
-            <div class="adm-item">
-                <span><strong>${val.jabatan}</strong> - ${val.nama}</span>
-                <button class="btn-danger" onclick="deleteData('pejabat/${key}')">Hapus</button>
-            </div>
-        `;
-    });
-    triggerScrollAnimation();
-});
-
-function addPejabat() {
-    const jabatan = document.getElementById('adm-pjb-jabatan').value;
-    const nama = document.getElementById('adm-pjb-nama').value;
-    const img = document.getElementById('adm-pjb-img').value;
-    
-    if(!jabatan || !nama || !img) return toastNotification('Harap isi semua input form pejabat!', 'error');
-
-    db.ref('pejabat').push({ jabatan, nama, img }, err => {
-        if(!err) {
-            toastNotification('Data Pejabat Berhasil Ditambahkan');
-            document.getElementById('adm-pjb-jabatan').value = '';
-            document.getElementById('adm-pjb-nama').value = '';
-            document.getElementById('adm-pjb-img').value = '';
-        }
-    });
-}
-
-// 3. Sinkronisasi Gambar Slideshow Banner Home & Galeri Foto Publik
-db.ref('images').on('value', snap => {
-    const slider = document.getElementById('sliderContainer');
-    const gallery = document.getElementById('ctx-images-public');
-    const admList = document.getElementById('adm-list-images');
-    
-    gallery.innerHTML = '';
-    admList.innerHTML = '';
-    
-    let slideHtml = '';
-    let firstSlide = true;
-
-    snap.forEach(child => {
-        const key = child.key;
-        const val = child.val();
-
-        if (val.type === 'slideshow') {
-            slideHtml += `
-                <div class="slide ${firstSlide ? 'active' : ''}" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url('${val.url}');">
-                    <div class="slide-content">
-                        <h2>Jayakarta Roleplay</h2>
-                        <p>Dunia Virtual Virtual Realitas Indonesia</p>
+        // Tampilkan di Daftar Kelola Panel Admin (Bisa Dihapus)
+        if (containerAdmin && statusSesiAdmin) {
+            containerAdmin.innerHTML += `
+                <div class="admin-item-row">
+                    <div>
+                        <strong>Tag:</strong> ${escapeHTML(data.role)} | 
+                        <strong>Gaya:</strong> ${data.style.toUpperCase()}<br>
+                        <small style="color: var(--text-muted); font-size:11px;">${escapeHTML(data.text.substring(0, 60))}...</small>
                     </div>
-                </div>
-            `;
-            firstSlide = false;
-        } else {
-            gallery.innerHTML += `<img src="${val.url}" class="gallery-item scroll-anim" onclick="window.open('${val.url}', '_blank')">`;
-        }
-
-        admList.innerHTML += `
-            <div class="adm-item">
-                <span>[${val.type.toUpperCase()}] ${val.url}</span>
-                <button class="btn-danger" onclick="deleteData('images/${key}')">Hapus</button>
-            </div>
-        `;
-    });
-
-    if(slideHtml) slider.innerHTML = slideHtml;
-    startSliderEngine();
-    triggerScrollAnimation();
-});
-
-function addImageData() {
-    const url = document.getElementById('adm-img-url').value;
-    const type = document.getElementById('adm-img-type').value;
-    if(!url) return toastNotification('Masukkan tautan URL Gambar!', 'error');
-
-    db.ref('images').push({ url, type }, err => {
-        if(!err) {
-            toastNotification('Gambar Terunggah Sukses');
-            document.getElementById('adm-img-url').value = '';
-        }
-    });
-}
-
-// 4. Sinkronisasi Semua Kategori Halaman Multi-Media Konten Post
-const listMediaMenus = ['media-info', 'media-dev', 'media-pemerintahan', 'media-discord', 'media-umum'];
-db.ref('media_posts').on('value', snap => {
-    listMediaMenus.forEach(menu => document.getElementById(`ctx-${menu}`).innerHTML = '');
-    const admList = document.getElementById('adm-list-media');
-    admList.innerHTML = '';
-
-    snap.forEach(child => {
-        const key = child.key;
-        const val = child.val();
-        const targetContainer = document.getElementById(`ctx-${val.target}`);
-
-        if (targetContainer) {
-            let imgRender = val.img ? `<img src="${val.img}" alt="Media Post Assets">` : '';
-            targetContainer.innerHTML += `
-                <div class="media-card scroll-anim">
-                    <h4>${val.title}</h4>
-                    <p>${val.text}</p>
-                    ${imgRender}
+                    <button class="btn-sm-danger" onclick="hapusGovAnnouncement('${data.id}')"><i class="fa-solid fa-trash"></i> Hapus</button>
                 </div>
             `;
         }
-
-        admList.innerHTML += `
-            <div class="adm-item">
-                <span>[${val.target.toUpperCase()}] - ${val.title}</span>
-                <button class="btn-danger" onclick="deleteData('media_posts/${key}')">Hapus</button>
-            </div>
-        `;
     });
-    triggerScrollAnimation();
 });
 
-function addMediaData() {
-    const target = document.getElementById('adm-med-target').value;
-    const title = document.getElementById('adm-med-title').value;
-    const img = document.getElementById('adm-med-img').value;
-    const text = document.getElementById('adm-med-text').value;
+// 2. Fungsi Eksekusi Kirim Pengumuman Manual dari Panel Admin
+function addGovAnnouncement() {
+    if (!statusSesiAdmin) return;
 
-    if(!title || !text) return toastNotification('Judul postingan dan konten teks wajib diisi!', 'error');
+    const roleInput = document.getElementById('adm-gov-role').value.trim();
+    const styleInput = document.getElementById('adm-gov-style').value;
+    const textInput = document.getElementById('adm-gov-text').value.trim();
 
-    db.ref('media_posts').push({ target, title, img, text }, err => {
-        if(!err) {
-            toastNotification('Artikel Berhasil Dipublish Kategori');
-            document.getElementById('adm-med-title').value = '';
-            document.getElementById('adm-med-img').value = '';
-            document.getElementById('adm-med-text').value = '';
-        }
+    if (!textInput) {
+        return Swal.fire("Eror Validasi", "Kolom isi pesan tidak boleh dikosongkan!", "error");
+    }
+
+    db.ref('gov_announcements').push({
+        role: roleInput || "@Everyone",
+        style: styleInput,
+        text: textInput,
+        timestamp: Date.now()
+    }).then(() => {
+        Swal.fire("Berhasil", "Embed Announcement Government Berhasil Disiarkan!", "success");
+        document.getElementById('adm-gov-text').value = "";
+        document.getElementById('adm-gov-role').value = "";
+    }).catch(err => {
+        Swal.fire("Gagal", err.message, "error");
     });
 }
 
-// --- GLOBAL REUSABLE FUNCTIONS DATA HANDLER ---
-function deleteData(path) {
+// 3. Fungsi Hapus Berita Pengumuman Pemerintah
+function hapusGovAnnouncement(idKey) {
     Swal.fire({
-        title: 'Hapus Item?',
-        text: "Data yang dihapus dari real-time database akan hilang permanen global.",
-        icon: 'warning',
+        title: "Hapus Embed?",
+        text: "Pengumuman ini akan lenyap permanen dari server website utama!",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#d9534f',
-        cancelButtonColor: '#333333',
-        confirmButtonText: 'Ya, Hapus!',
-        background: '#141414',
-        color: '#ffffff'
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Ya, Hapus!"
     }).then((result) => {
         if (result.isConfirmed) {
-            db.ref(path).remove(err => {
-                if(!err) toastNotification('Item Terhapus dari Database', 'info');
+            db.ref(`gov_announcements/${idKey}`).remove().then(() => {
+                Swal.fire("Terhapus", "Data pengumuman berhasil dibersihkan.", "success");
             });
         }
     });
 }
 
-// Real-Time Banner Slider Automation Loop Engine
-let sliderTimer;
-function startSliderEngine() {
-    clearInterval(sliderTimer);
-    const slides = document.querySelectorAll('.slide');
-    if(slides.length <= 1) return;
-    let index = 0;
+
+// ==========================================================================
+// CORE CONTENT RENDERING SYSTEM (TEXTS, PEJABAT, IMAGES & MULTIMEDIA)
+// ==========================================================================
+
+// Sinkronisasi Profile Komunitas & Sejarah (Teks)
+db.ref('text_data').on('value', (snapshot) => {
+    const data = snapshot.val() || {};
     
-    sliderTimer = setInterval(() => {
-        slides[index].classList.remove('active');
-        index = (index + 1) % slides.length;
-        slides[index].classList.add('active');
-    }, 5000);
+    const viewProf = document.getElementById('ctx-profile-comm');
+    const viewSej = document.getElementById('ctx-sejarah');
+    const admProf = document.getElementById('adm-prof-comm');
+    const admSej = document.getElementById('adm-sejarah');
+
+    if(viewProf) viewProf.innerHTML = data.profile_comm || "Deskripsi profile belum dikonfigurasi.";
+    if(viewSej) viewSej.innerHTML = data.sejarah || "Sejarah komunitas belum ditambahkan oleh administrator.";
+
+    if(admProf && !admProf.value) admProf.value = data.profile_comm || "";
+    if(admSej && !admSej.value) admSej.value = data.sejarah || "";
+});
+
+// Sinkronisasi Struktur Birokrasi Pejabat Negara
+db.ref('pejabat').on('value', (snapshot) => {
+    const ctxPejabat = document.getElementById('ctx-pejabat');
+    const admListPejabat = document.getElementById('adm-list-pejabat');
+
+    if(ctxPejabat) ctxPejabat.innerHTML = "";
+    if(admListPejabat) admListPejabat.innerHTML = "";
+
+    snapshot.forEach((child) => {
+        const key = child.key;
+        const val = child.val();
+
+        if(ctxPejabat) {
+            ctxPejabat.innerHTML += `
+                <div class="pejabat-card scroll-anim appear">
+                    <img src="${val.img || 'https://via.placeholder.com/150'}" alt="${val.nama}">
+                    <div class="pejabat-info">
+                        <h4>${escapeHTML(val.jabatan)}</h4>
+                        <p>${escapeHTML(val.nama)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(admListPejabat && statusSesiAdmin) {
+            admListPejabat.innerHTML += `
+                <div class="admin-item-row">
+                    <span><strong>${escapeHTML(val.jabatan)}</strong> - ${escapeHTML(val.nama)}</span>
+                    <button class="btn-sm-danger" onclick="deleteData('pejabat','${key}')">Hapus</button>
+                </div>
+            `;
+        }
+    });
+});
+
+// Sinkronisasi Koleksi Gambar Publik & Home Slider Dynamic
+db.ref('images_data').on('value', (snapshot) => {
+    const ctxGallery = document.getElementById('ctx-images-public');
+    const admListImg = document.getElementById('adm-list-images');
+    const sliderContainer = document.getElementById('sliderContainer');
+
+    if(ctxGallery) ctxGallery.innerHTML = "";
+    if(admListImg) admListImg.innerHTML = "";
+    
+    let sliderHTML = "";
+    let statusAdaSlide = false;
+
+    snapshot.forEach((child) => {
+        const key = child.key;
+        const val = child.val();
+
+        if(val.type === 'public' && ctxGallery) {
+            ctxGallery.innerHTML += `
+                <div class="gallery-item" onclick="viewImageFull('${val.url}')">
+                    <img src="${val.url}" alt="Gallery Public">
+                </div>
+            `;
+        } else if(val.type === 'slideshow') {
+            statusAdaSlide = true;
+            sliderHTML += `
+                <div class="slide" style="background-image: url('${val.url}');">
+                    <div class="slide-content">
+                        <h2>[ID] Jayakarta Roleplay</h2>
+                        <p>Server Kota Impian Terbaik & Berwibawa Seluruh Indonesia</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(admListImg && statusSesiAdmin) {
+            admListImg.innerHTML += `
+                <div class="admin-item-row">
+                    <span>(${val.type}) <a href="${val.url}" target="_blank">Lihat Tautan Gambar</a></span>
+                    <button class="btn-sm-danger" onclick="deleteData('images_data','${key}')">Hapus</button>
+                </div>
+            `;
+        }
+    });
+
+    if(sliderContainer && statusAdaSlide) {
+        sliderContainer.innerHTML = sliderHTML;
+        startSliderEngine();
+    }
+});
+
+// Sinkronisasi Multi-Media News & Post Categories Filter System
+db.ref('media_posts').on('value', (snapshot) => {
+    const targetIDs = ['media-info', 'media-dev', 'media-pemerintahan', 'media-discord', 'media-umum'];
+    targetIDs.forEach(id => {
+        const element = document.getElementById(`ctx-${id}`);
+        if(element) element.innerHTML = "";
+    });
+
+    const admListMedia = document.getElementById('adm-list-media');
+    if(admListMedia) admListMedia.innerHTML = "";
+
+    snapshot.forEach((child) => {
+        const key = child.key;
+        const val = child.val();
+        const ctxTarget = document.getElementById(`ctx-${val.target}`);
+
+        if(ctxTarget) {
+            let mediaImgHTML = val.img ? `<img src="${val.img}" alt="Media Illustration" style="width:100%; max-height:250px; object-fit:cover; border-radius:6px; margin-bottom:15px;">` : '';
+            ctxTarget.innerHTML += `
+                <div class="card scroll-anim appear" style="margin-bottom:25px;">
+                    <div class="card-body">
+                        ${mediaImgHTML}
+                        <h3 style="color:var(--neon-text); margin-bottom:10px;">${escapeHTML(val.title)}</h3>
+                        <p style="white-space:pre-wrap; line-height:1.6; color:#e2e8f0;">${escapeHTML(val.text)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(admListMedia && statusSesiAdmin) {
+            admListMedia.innerHTML += `
+                <div class="admin-item-row">
+                    <span>[${val.target.toUpperCase()}] - ${escapeHTML(val.title)}</span>
+                    <button class="btn-sm-danger" onclick="deleteData('media_posts','${key}')">Hapus</button>
+                </div>
+            `;
+        }
+    });
+});
+
+
+// ==========================================================================
+// EXECUTIONS & ACTION WRITE DATA SYSTEM (ADMINISTRATOR MODES)
+// ==========================================================================
+
+function updateTextData() {
+    if(!statusSesiAdmin) return;
+    const pComm = document.getElementById('adm-prof-comm').value;
+    const sej = document.getElementById('adm-sejarah').value;
+
+    db.ref('text_data').set({
+        profile_comm: pComm,
+        sejarah: sej
+    }).then(() => {
+        Swal.fire("Sukses", "Deskripsi Profil & Sejarah berhasil diperbarui!", "success");
+    });
 }
 
-// Scroll Intersection Visual Triggers Animation Function
-function triggerScrollAnimation() {
-    const items = document.querySelectorAll('.scroll-anim');
-    items.forEach(item => {
-        const rect = item.getBoundingClientRect();
-        if(rect.top < window.innerHeight - 30) {
-            item.classList.add('appear');
+function addPejabat() {
+    if(!statusSesiAdmin) return;
+    const jabatan = document.getElementById('adm-pjb-jabatan').value.trim();
+    const nama = document.getElementById('adm-pjb-nama').value.trim();
+    const img = document.getElementById('adm-pjb-img').value.trim();
+
+    if(!jabatan || !nama) return Swal.fire("Eror", "Jabatan & Nama wajib diisi!", "error");
+
+    db.ref('pejabat').push({ jabatan, nama, img }).then(() => {
+        Swal.fire("Sukses", "Struktur birokrasi pejabat berhasil ditambah!", "success");
+        document.getElementById('adm-pjb-jabatan').value = "";
+        document.getElementById('adm-pjb-nama').value = "";
+        document.getElementById('adm-pjb-img').value = "";
+    });
+}
+
+function addImageData() {
+    if(!statusSesiAdmin) return;
+    const url = document.getElementById('adm-img-url').value.trim();
+    const type = document.getElementById('adm-img-type').value;
+
+    if(!url) return Swal.fire("Eror", "URL Link Tautan Gambar Kosong!", "error");
+
+    db.ref('images_data').push({ url, type }).then(() => {
+        Swal.fire("Sukses", "Data Gambar berhasil disimpan!", "success");
+        document.getElementById('adm-img-url').value = "";
+    });
+}
+
+function addMediaData() {
+    if(!statusSesiAdmin) return;
+    const target = document.getElementById('adm-custom-target') ? document.getElementById('adm-custom-target').value : document.getElementById('adm-med-target').value;
+    const title = document.getElementById('adm-med-title').value.trim();
+    const img = document.getElementById('adm-med-img').value.trim();
+    const text = document.getElementById('adm-med-text').value.trim();
+
+    if(!title || !text) return Swal.fire("Eror", "Judul & Konten Pesan teks wajib diisi!", "error");
+
+    db.ref('media_posts').push({ target, title, img, text }).then(() => {
+        Swal.fire("Sukses", "Berita Artikel Media berhasil di-publish!", "success");
+        document.getElementById('adm-med-title').value = "";
+        document.getElementById('adm-med-img').value = "";
+        document.getElementById('adm-med-text').value = "";
+    });
+}
+
+function deleteData(path, nodeKey) {
+    if(!statusSesiAdmin) return;
+    Swal.fire({
+        title: "Konfirmasi Hapus?",
+        text: "Data yang dihapus tidak bisa dikembalikan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Ya, Eliminasi!"
+    }).then((res) => {
+        if(res.isConfirmed) {
+            db.ref(`${path}/${nodeKey}`).remove().then(() => {
+                Swal.fire("Terhapus", "Data Node berhasil dieksekusi keluar.", "success");
+            });
         }
     });
 }
 
-window.addEventListener('scroll', triggerScrollAnimation);
-window.addEventListener('load', triggerScrollAnimation);
+
+// ==========================================================================
+// SECURITY ACCESS SYSTEM (ADMIN CONTROLLER GATE)
+// ==========================================================================
+
+function loginAdmin() {
+    Swal.fire({
+        title: 'Security Administrator Check',
+        html: `
+            <input type="text" id="swal-user" class="swal2-input" placeholder="Username">
+            <input type="password" id="swal-pass" class="swal2-input" placeholder="Password">
+        `,
+        focusConfirm: false,
+        showCancelButton: true,
+        confirmButtonText: 'Buka Dashboard',
+        preConfirm: () => {
+            const user = document.getElementById('swal-user').value;
+            const pass = document.getElementById('swal-pass').value;
+            return { user: user, pass: pass };
+        }
+    }).then((result) => {
+        if (result.isDismissed) return;
+        
+        const credentials = result.value;
+        if(credentials.user === "admin" && credentials.pass === "jayakarta2026") {
+            statusSesiAdmin = true;
+            switchView('admin');
+            
+            // Memicu trigger render ulang data kelola internal panel admin
+            db.ref('pejabat').off(); db.ref('images_data').off(); db.ref('media_posts').off();
+            db.ref('pejabat').on('value', () => {}); db.ref('images_data').on('value', () => {}); db.ref('media_posts').on('value', () => {});
+            
+            Swal.fire("Akses Diterima", "Selamat datang kembali Owner / Admin Utama.", "success");
+        } else {
+            Swal.fire("Akses Ditolak", "Kombinasi Key-Kata Sandi Salah Total!", "error");
+        }
+    });
+}
+
+function logoutAdmin() {
+    statusSesiAdmin = false;
+    switchView('home');
+    Swal.fire("Logged Out", "Sesi kendali administrator berhasil ditutup dengan aman.", "info");
+}
+
+
+// ==========================================================================
+// UX ANIMATION SYSTEMS & COMPLEMENTARY ENGINE SLIDER
+// ==========================================================================
+
+function startSliderEngine() {
+    const slides = document.querySelectorAll('.slider-container .slide');
+    if(slides.length <= 1) return;
+    
+    let indexSekarang = 0;
+    setInterval(() => {
+        slides[indexSekarang].classList.remove('active');
+        indexSekarang = (indexSekarang + 1) % slides.length;
+        slides[indexSekarang].classList.add('active');
+    }, 5000);
+}
+
+// Media Viewer Fullscreen Lightbox Pop Up
+function viewImageFull(urlTautan) {
+    Swal.fire({
+        imageUrl: urlTautan,
+        imageAlt: 'Visual JRP Real-Time Graphic Preview',
+        showCloseButton: true,
+        showConfirmButton: false,
+        background: 'rgba(10,12,16,0.95)',
+        width: '90%'
+    });
+}
+
+// Anti-XSS Injection Safe String Filter Protection HTML
+function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>"']/g, function(m) {
+        switch (m) {
+            case '&': return '&amp;';
+            case '<': return '&lt;';
+            case '>': return '&gt;';
+            case '"': return '&quot;';
+            case "'": return '&#039;';
+        }
+    });
+}
+
+// Scroll Intersection Watcher Trigger Engine Pack Animasi CSS
+document.addEventListener("DOMContentLoaded", () => {
+    startSliderEngine();
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
+});
+      

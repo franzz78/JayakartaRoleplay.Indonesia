@@ -1,12 +1,14 @@
-/* GLOBAL VARIABEL THEME LUXURY DARK NEON */
+/* DESIGN CORE PARAMS */
 :root {
-    --bg-main: #0a0c10;
-    --bg-card: #121620;
-    --neon-gold: #eab308;
-    --neon-gold-hover: #facc15;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --neon-line: rgba(234, 179, 8, 0.15);
+    --bg-deep-black: #05070a;
+    --bg-card-panel: #0d111a;
+    --accent-gold: #eab308;
+    --accent-gold-glow: #facc15;
+    --text-white: #f8fafc;
+    --text-dark-muted: #64748b;
+    --border-cyber: rgba(234, 179, 8, 0.12);
+    --font-cyber: 'Rajdhani', sans-serif;
+    --font-base: 'Space Grotesk', sans-serif;
 }
 
 * {
@@ -16,23 +18,23 @@
 }
 
 body {
-    background-color: var(--bg-main);
-    color: var(--text-main);
-    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-deep-black);
+    color: var(--text-white);
+    font-family: var(--font-base);
     overflow-x: hidden;
 }
 
-/* NAVBAR & BRANDING UI */
+/* NAVIGATION HEADER NAVBAR UI */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 5%;
-    background: #0e1118;
-    border-bottom: 1px solid var(--neon-line);
+    padding: 12px 4%;
+    background: #090c12;
+    border-bottom: 2px solid var(--border-cyber);
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 999;
 }
 .nav-brand {
     display: flex;
@@ -40,72 +42,112 @@ body {
     gap: 12px;
 }
 .brand-logo {
-    width: 45px;
-    height: 45px;
-    object-fit: cover;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
 }
 .main-title {
     display: block;
+    font-family: var(--font-cyber);
     font-weight: 700;
-    font-size: 16px;
-    color: var(--text-main);
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--accent-gold);
 }
 .sub-title {
     display: block;
     font-size: 11px;
-    color: var(--text-muted);
+    color: var(--text-dark-muted);
+}
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
+/* BUTTONS ENGINE STYLE */
 .btn-nav-gov {
-    background: var(--neon-gold);
-    color: #000 !important;
+    background: var(--accent-gold);
+    color: #000;
+    font-family: var(--font-cyber);
     font-weight: 700;
+    font-size: 14px;
     padding: 8px 16px;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.2s ease;
 }
 .btn-nav-gov:hover {
-    background: var(--neon-gold-hover);
-    transform: scale(1.03);
+    background: var(--accent-gold-glow);
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.4);
 }
 
-/* VIEW TOGGLE CORE MANAGER */
+/* VIEW STATE CONTROLLER ENGINE */
 .view-active {
     display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    animation: fadeInPage 0.25s linear forwards;
 }
 .view-hidden {
     display: none !important;
-    visibility: hidden !important;
+}
+@keyframes fadeInPage {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* CORE EMBED DISCORD DESIGN (KUNING PEMERINTAHAN) */
+/* APP CONTENT LAYOUT MANAGEMENT */
+.content-wrapper {
+    padding: 25px 4%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.page-header {
+    margin-bottom: 25px;
+    border-bottom: 1px solid var(--border-cyber);
+    padding-bottom: 12px;
+}
+.page-header h2 {
+    font-family: var(--font-cyber);
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--accent-gold);
+}
+.page-header p {
+    font-size: 13px;
+    color: var(--text-dark-muted);
+    margin-top: 2px;
+}
+
+/* DISCORD REAL EMBED WEB INTERFACE BOX */
+.embed-stream-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 .embed-gov-card {
-    background: var(--bg-card);
-    border-left: 5px solid var(--neon-gold); /* Sisi kiri garis kuning solid khas embed */
+    background: var(--bg-card-panel);
+    border-left: 4px solid var(--accent-gold);
     border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    padding: 16px 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    border-right: 1px solid rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.02);
 }
 .embed-role-tag {
-    color: var(--neon-gold);
-    font-weight: 600;
+    color: var(--accent-gold);
     font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
     display: inline-block;
-    margin-bottom: 8px;
 }
 .embed-title-gov {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 12px;
+    color: #fff;
+    margin-bottom: 10px;
 }
-
-/* GAYA FORMAT TULISAN */
 .msg-tebal {
     font-weight: 700;
     color: #ffffff;
@@ -114,99 +156,173 @@ body {
     line-height: 1.6;
 }
 .msg-code {
-    font-family: 'Courier New', Courier, monospace;
-    background: #07090e;
+    font-family: 'Courier New', monospace;
+    background: #06080d;
     padding: 12px;
     border-radius: 4px;
-    color: #34d399; /* Hijau terminal code */
-    font-weight: 500;
+    color: #4ade80;
+    font-size: 14px;
     white-space: pre-wrap;
     line-height: 1.5;
     border: 1px solid rgba(255,255,255,0.05);
 }
-
 .embed-footer-gov {
     font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 15px;
+    color: var(--text-dark-muted);
+    margin-top: 12px;
     border-top: 1px solid rgba(255,255,255,0.05);
-    padding-top: 8px;
+    padding-top: 6px;
 }
 
-/* ADMIN FORM & AREA COMPONENTS */
-.admin-gov-box {
-    background: rgba(234, 179, 8, 0.03);
-    border: 1px solid var(--neon-line);
-    padding: 25px;
-    border-radius: 12px;
-    margin-bottom: 30px;
+/* HERO BANNER & BASIC CARD LAYOUTS */
+.hero-banner {
+    background-image: linear-gradient(rgba(5,7,10,0.4), rgba(5,7,10,0.9)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200');
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    border: 1px solid var(--border-cyber);
+    margin-bottom: 25px;
+    overflow: hidden;
 }
-.form-group {
+.hero-overlay {
+    padding: 60px 30px;
+    text-align: center;
+}
+.hero-overlay h1 { font-family: var(--font-cyber); font-size: 38px; color: #fff; margin-bottom: 8px; }
+.hero-overlay p { font-size: 14px; color: #cbd5e1; margin-bottom: 25px; }
+
+.btn-jumbo-gov {
+    background: var(--accent-gold);
+    color: #000;
+    font-family: var(--font-cyber);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.join-box {
+    background: #0a2540;
+    border: 1px solid #00d2ff;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+.btn-discord {
+    background: #5865F2;
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.premium-card {
+    background: var(--bg-card-panel);
+    border: 1px solid var(--border-cyber);
+    border-radius: 6px;
+    padding: 20px;
+}
+
+/* GRID SYSTEMS (ANTI-PECAH) */
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+.grid-layout-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+}
+.media-column-stack {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+}
+
+/* ADMIN PANEL BACKDOOR UI VIEW */
+.admin-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-gold);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.admin-feature-box {
+    background: rgba(255,255,255,0.01);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+.highlight-border {
+    border: 1px solid var(--border-cyber);
+    background: rgba(234,179,8,0.01);
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     margin-top: 15px;
 }
-.form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: #161b26;
-    border: 1px solid rgba(255,255,255,0.1);
+.input-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.input-block label { font-size: 11px; font-weight: 700; color: var(--accent-gold); }
+.form-container input, .form-container select, .form-container textarea {
+    background: #111622;
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 14px;
     color: #fff;
-    border-radius: 6px;
-    font-family: 'Poppins', sans-serif;
+    border-radius: 4px;
+    font-family: var(--font-base);
+    font-size: 14px;
 }
-.btn-submit-gov {
-    background: var(--neon-gold);
-    color: #000;
-    font-weight: 800;
-    border: none;
-    padding: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-transform: uppercase;
-}
+.btn-primary-action { background: var(--accent-gold); color: #000; font-family: var(--font-cyber); font-weight: 700; padding: 12px; border: none; cursor: pointer; border-radius: 4px; }
+.btn-secondary-action { background: #334155; color: #fff; padding: 8px 16px; border: none; cursor: pointer; border-radius: 4px; font-size: 13px; }
+.btn-danger-action { background: #ef4444; color:#fff; border:none; padding:8px 14px; border-radius:4px; cursor:pointer; font-size:12px; }
 
-/* LAYOUT JUMBO HOME */
-.btn-jumbo-gov {
-    background: var(--neon-gold);
-    color: #000;
-    font-weight: 800;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.2);
-}
+.admin-log-title { margin-top: 25px; font-size: 13px; font-weight: 700; color: var(--accent-gold); }
+.admin-data-list-scroller { max-height: 300px; overflow-y: auto; margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
 
-/* SIDEBAR DRAWER UTILITIES */
+/* DRAWER SIDEBAR UTILITIES */
 .sidebar {
     position: fixed;
     top: 0;
     right: -300px;
-    width: 300px;
+    width: 280px;
     height: 100%;
-    background: #0b0e14;
-    border-left: 1px solid var(--neon-line);
-    transition: 0.3s ease;
+    background: #090c12;
+    border-left: 1px solid var(--border-cyber);
+    transition: 0.2s ease-in-out;
     z-index: 9999;
-    padding: 30px;
+    padding: 25px;
 }
 .sidebar.open { right: 0; }
-.nav-links { list-style: none; margin-top: 40px; }
-.nav-links li { margin-bottom: 20px; }
-.nav-links a { color: #fff; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+.close-btn { text-align: right; font-size: 20px; cursor: pointer; }
+.sidebar-header-title { font-size: 11px; font-weight: 700; color: var(--text-dark-muted); margin-top: 20px; }
+.nav-links { list-style: none; margin-top: 10px; }
+.nav-links li { margin-bottom: 12px; }
+.nav-links a { color: #cbd5e1; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.highlight-link { color: var(--accent-gold) !important; font-weight: 700; }
+.separator { font-size: 11px; color: var(--text-dark-muted); margin: 20px 0 8px 0; font-weight: 700; }
 
-/* VINYL DISK CSS ANIMATION */
-.vinyl-container { display: flex; align-items: center; gap: 6px; cursor: pointer; }
-.vinyl-disk { font-size: 24px; color: var(--neon-gold); }
-.spinning { animation: spin 2s linear infinite; }
+.vinyl-container { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11px; }
+.vinyl-disk { font-size: 20px; color: var(--accent-gold); }
+.spinning { animation: spin 3s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
 
-/* BASIC DECORATORS */
-.content-wrapper { padding: 30px 5%; }
-.card { background: var(--bg-card); border-radius: 8px; padding: 25px; border: 1px solid var(--neon-line); }
-.neon-line { border: none; height: 1px; background: var(--neon-line); margin: 30px 0; }
-.admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.btn-danger { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+/* ANIMATION FX COMPONENTS */
+.animate-flicker { animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }

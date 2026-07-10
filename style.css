@@ -545,3 +545,64 @@ button:hover { background: #e2e8f0; transform: translateY(-2px); }
     button { width: 100%; }
 }
 
+/* STYLING EMBED ANNOUNCEMENT GOVERNMENT */
+.embed-gov-card {
+    background: rgba(18, 22, 32, 0.8);
+    border-left: 5px solid #eab308; /* Garis Tepi Kiri Warna Kuning */
+    border-top: 1px solid var(--neon-line);
+    border-right: 1px solid var(--neon-line);
+    border-bottom: 1px solid var(--neon-line);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.embed-role-tag {
+    color: #a5b4fc;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.embed-title-gov {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Style Tulisan Tebal Putih */
+.msg-tebal {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+}
+
+/* Style Tulisan Blok Kode Discord */
+.msg-code {
+    background: #090c10;
+    color: #e2e8f0;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 16px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    display: block;
+}
+
+.embed-footer-gov {
+    margin-top: 18px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #9aa5b5;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 10px;
+}

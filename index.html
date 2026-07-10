@@ -6,25 +6,37 @@
     <title>[ID] Jayakarta Roleplay, Indonesia</title>
     <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#121212">
+    <meta name="theme-color" content="#0a0c10">
+    <!-- Google Fonts Premium Load Layout -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome & Icon Pack -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Firebase Legacy SDK (CDN Asli Bawaan Server Lu) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
+    <!-- Background Music Engine Player (Auto-Play Link Supabase) -->
+    <audio id="globalBgMusic" loop>
+        <source src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Logo_Website/Sound/vidssave.com%20DJ%20BODY%20PATA%20PATA%20CANTIK%20JELITA%20SLOW%20VIRAL%20TIKTOK%20FULL%20SONG%20MAMAN%20FVNDY%202026%20256KBPS.mp3?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1dlYnNpdGUvU291bmQvdmlkc3NhdmUuY29tIERKIEJPRFkgUEFUQSBQQVRBIENBTlRJSyBKRUxJVEEgU0xPVyBWSVJBTCBUSUtUT0sgRlVMTCBTT05HIE1BTUFOIEZWTkRZIDIwMjYgMjU2S0JQUy5tcDMiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNjYxNDU1LCJleHAiOjE4MTUxOTc0NTV9.9PNuvHs1kaEkLJ2lGTpW5uD27OSjqEHQR8Fo-x45go4" type="audio/mpeg">
+    </audio>
+
+    <!-- NAVBAR PREMIUM & MODERN -->
     <nav class="navbar">
         <div class="nav-brand">
-            <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1dlYnNpdGUvTG9nb19XZWJzaXRlL2ZpbGVfMDAwMDAwMDBhODI4NzIwN2I2NjY0ZmE2ZmZlYjEwYjQucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MzYyOTkzMSwiZXhwIjoxODE1MTY1OTMxfQ.NZPtNsKi7eNmGuSrfNngVL-WJX2fE8m1X92WXkrYoTM" class="brand-logo" alt="Logo Jayakarta Roleplay">
+            <!-- Logo Resmi Komunitas Jayakarta Dari Supabase -->
+            <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/sign/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9kNWIxNTEyZS03YTE5LTQzY2UtYWUxNC00ZmRkNzMyZmIyODMiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMb2dvX1dlYnNpdGUvTG9nb19XZWJzaXRlL2ZpbGVfMDAwMDAwMDBhODI4NzIwN2I2NjY0ZmE2ZmZlYjEwYjQucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTbutton7ODM2Mjk5MzEsImV4cCI6MTgxNTE2NTkzMX0.NZPtNsKi7eNmGuSrfNngVL-WJX2fE8m1X92WXkrYoTM" class="brand-logo" alt="Logo Jayakarta Roleplay">
             <div class="brand-text">
-                <span class="main-title">[ID] Jayakarta Roleplay, Indonesia</span>
+                <span class="main-title">[ID] Jayakarta Roleplay</span>
                 <span class="sub-title">Official Website Jayakarta Roleplay Indonesia</span>
             </div>
         </div>
         
-        <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <!-- Piring Hitam (Vinyl Player) Backsound Global -->
             <div class="vinyl-container" id="vinylPlayer" onclick="toggleAudioGlobal()">
                 <div class="vinyl-disk" id="vinylDisk">
                     <i class="fa-solid fa-compact-disc"></i>
@@ -38,6 +50,7 @@
         </div>
     </nav>
 
+    <!-- SIDEBAR NAVIGATION MENU (Premium Drawer) -->
     <div class="sidebar" id="sidebar">
         <div class="close-btn" id="closeBtn"><i class="fa-solid fa-xmark"></i></div>
         <ul class="nav-links">
@@ -56,9 +69,12 @@
         </ul>
     </div>
 
+    <!-- MAIN HIERARCHY CONTENT WRAPPER -->
     <main class="content-wrapper">
         
+        <!-- SECTION: HOME -->
         <section id="view-home" class="view-active fade-in">
+            <!-- Dynamic Real-time Slider Container -->
             <div class="slider-container" id="sliderContainer">
                 <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000');">
                     <div class="slide-content">
@@ -68,6 +84,7 @@
                 </div>
             </div>
 
+            <!-- Call to Action Link Discord -->
             <div class="join-box scroll-anim appear">
                 <h3>Bergabung Bersama Kami</h3>
                 <p>Rasakan pengalaman ber-roleplay yang realistis, aman, dan seru di Server Indonesia.</p>
@@ -77,6 +94,7 @@
             </div>
         </section>
 
+        <!-- SECTION: PROFILE COMMUNITY -->
         <section id="view-profile-comm" class="view-hidden">
             <h2>Profile Community</h2>
             <div class="card" style="margin-top: 20px;">
@@ -84,12 +102,15 @@
             </div>
         </section>
 
+        <!-- SECTION: PROFILE PEJABAT NEGARA -->
         <section id="view-pejabat" class="view-hidden">
             <h2>Profile Pejabat Negara</h2>
             <div class="pejabat-grid" id="ctx-pejabat" style="margin-top: 25px;">
-                </div>
+                <!-- Diisi Dinamis Melalui Firebase -->
+            </div>
         </section>
 
+        <!-- SECTION: SEJARAH COMMUNITY -->
         <section id="view-sejarah" class="view-hidden">
             <h2>Sejarah Community</h2>
             <div class="card" style="margin-top: 20px;">
@@ -97,37 +118,45 @@
             </div>
         </section>
 
+        <!-- SECTION: IMAGES PUBLIC -->
         <section id="view-images-public" class="view-hidden">
             <h2>Images Public</h2>
             <div class="image-gallery" id="ctx-images-public" style="margin-top: 25px;">
-                </div>
+                <!-- Diisi Gallery Foto -->
+            </div>
         </section>
 
+        <!-- SECTION: MEDIA INFORMATION -->
         <section id="view-media-info" class="view-hidden">
             <h2>Media Information</h2>
             <div class="media-container" id="ctx-media-info" style="margin-top: 25px;"></div>
         </section>
 
+        <!-- SECTION: MEDIA DEVELOPMENT -->
         <section id="view-media-dev" class="view-hidden">
             <h2>Media Development</h2>
             <div class="media-container" id="ctx-media-dev" style="margin-top: 25px;"></div>
         </section>
 
+        <!-- SECTION: MEDIA PEMERINTAHAN -->
         <section id="view-media-pemerintahan" class="view-hidden">
             <h2>Media Pemerintahan</h2>
             <div class="media-container" id="ctx-media-pemerintahan" style="margin-top: 25px;"></div>
         </section>
 
+        <!-- SECTION: MEDIA DISCORD -->
         <section id="view-media-discord" class="view-hidden">
             <h2>Media Discord</h2>
             <div class="media-container" id="ctx-media-discord" style="margin-top: 25px;"></div>
         </section>
 
+        <!-- SECTION: MEDIA UMUM -->
         <section id="view-media-umum" class="view-hidden">
             <h2>Media Umum</h2>
             <div class="media-container" id="ctx-media-umum" style="margin-top: 25px;"></div>
         </section>
 
+        <!-- SECTION: SETTINGS -->
         <section id="view-settings" class="view-hidden">
             <h2>Settings</h2>
             <div class="card" style="margin-top: 20px;">
@@ -138,23 +167,15 @@
             </div>
         </section>
 
+        <!-- SECTION: ADMINISTRATOR PANEL CONTROL -->
         <section id="view-admin" class="view-hidden">
             <div class="card">
                 <div class="admin-header">
                     <h2><i class="fa-solid fa-user-shield"></i> Administrator Dashboard</h2>
                     <button class="btn-danger" onclick="logoutAdmin()">Logout Panel</button>
                 </div>
-                
-                <div style="margin-bottom: 40px;">
-                    <h3><i class="fa-solid fa-music"></i> Pengaturan Global Backsound (Real-time MP3 URL)</h3>
-                    <div class="form-group">
-                        <input type="text" id="adm-audio-url" placeholder="Masukkan Direct Link File Audio/MP3">
-                        <button onclick="updateGlobalAudio()">Terapkan Musik Sekarang</button>
-                    </div>
-                </div>
 
-                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
-
+                <!-- Profile & Sejarah Teks Editor -->
                 <div style="margin-bottom: 40px;">
                     <h3><i class="fa-solid fa-file-pen"></i> Kelola Informasi Dasar Website</h3>
                     <div class="form-group">
@@ -168,10 +189,11 @@
 
                 <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
 
+                <!-- Profile Pejabat Dynamic Editor -->
                 <div style="margin-bottom: 40px;">
                     <h3><i class="fa-solid fa-user-plus"></i> Struktur Birokrasi Pejabat Negara</h3>
                     <div class="form-inline">
-                        <input type="text" id="adm-pjb-jabatan" placeholder="Contoh: [RI-1] PRESIDEN REPUBLIK INDONESIA">
+                        <input type="text" id="adm-pjb-jabatan" placeholder="Contoh: [RI-1] PRESIDEN">
                         <input type="text" id="adm-pjb-nama" placeholder="Nama Lengkap Pejabat">
                         <input type="text" id="adm-pjb-img" placeholder="URL Foto Link Pejabat">
                         <button onclick="addPejabat()">Tambah Struktur</button>
@@ -181,6 +203,7 @@
 
                 <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
 
+                <!-- Slider & Gallery Control -->
                 <div style="margin-bottom: 40px;">
                     <h3><i class="fa-solid fa-images"></i> Kelola Unggahan Gambar Visual</h3>
                     <div class="form-inline">
@@ -196,6 +219,7 @@
 
                 <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
 
+                <!-- Multi Media Post Category Filter Engine -->
                 <div>
                     <h3><i class="fa-solid fa-photo-film"></i> Publish Artikel Konten Multi-Media</h3>
                     <div class="form-group">
@@ -219,8 +243,61 @@
 
     </main>
 
+    <!-- LOGIKA JAVASCRIPT UTAMA -->
     <script src="script.js"></script>
     <script>
+        // Logika Buka Tutup Sidebar
+        const sidebar = document.getElementById('sidebar');
+        document.getElementById('menuToggle').addEventListener('click', () => sidebar.classList.add('open'));
+        document.getElementById('closeBtn').addEventListener('click', () => sidebar.classList.remove('open'));
+
+        // Logika Switch View Menu Tab Halaman
+        function switchView(viewId) {
+            const sections = document.querySelectorAll('.content-wrapper section');
+            sections.forEach(sec => {
+                sec.classList.remove('view-active', 'fade-in');
+                sec.classList.add('view-hidden');
+            });
+            const target = document.getElementById(`view-${viewId}`);
+            if(target) {
+                target.classList.remove('view-hidden');
+                target.classList.add('view-active', 'fade-in');
+            }
+            sidebar.classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= FITUR BACKGROUND MUSIC ENGINE =================
+        const bgMusic = document.getElementById('globalBgMusic');
+        const vinylDisk = document.getElementById('vinylDisk');
+        const vinylStatus = document.querySelector('.vinyl-container .vinyl-status');
+
+        // Mekanisme Auto-Play pada interaksi pertama pengunjung halaman web
+        function autoPlayHandler() {
+            bgMusic.play().then(() => {
+                vinylDisk.classList.add('spinning');
+                if (vinylStatus) vinylStatus.innerText = "Playing";
+                document.removeEventListener('click', autoPlayHandler);
+            }).catch(error => {
+                console.log("Autoplay dicegah sistem perlindungan browser, menunggu klik...", error);
+            });
+        }
+        document.addEventListener('click', autoPlayHandler);
+
+        // Fungsi manual klik piringan hitam di Navbar
+        function toggleAudioGlobal() {
+            document.removeEventListener('click', autoPlayHandler);
+            if (bgMusic.paused) {
+                bgMusic.play();
+                vinylDisk.classList.add('spinning');
+                if (vinylStatus) vinylStatus.innerText = "Playing";
+            } else {
+                bgMusic.pause();
+                vinylDisk.classList.remove('spinning');
+                if (vinylStatus) vinylStatus.innerText = "Mute";
+            }
+        }
+
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
         }

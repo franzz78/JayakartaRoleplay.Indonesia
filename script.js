@@ -24,7 +24,7 @@ let statusSesiAdmin = false;
 // DISCORD EMBED LOGIC ENGINE: ANNOUNCEMENT GOVERNMENT
 // ==========================================================================
 
-// 1. Ambil & Render Pengumuman Pemerintah ke Halaman Pengunjung (Urutan Terbaru di Atas)
+// 1. Ambil & Render Pengumuman Pemerintah ke Halaman Pengunjung
 db.ref('gov_announcements').on('value', (snapshot) => {
     const containerUser = document.getElementById('ctx-gov-announce');
     const containerAdmin = document.getElementById('adm-list-gov');
@@ -63,13 +63,12 @@ db.ref('gov_announcements').on('value', (snapshot) => {
         // Tampilkan di Daftar Kelola Panel Admin (Bisa Dihapus)
         if (containerAdmin && statusSesiAdmin) {
             containerAdmin.innerHTML += `
-                <div class="admin-item-row">
-                    <div>
-                        <strong>Tag:</strong> ${escapeHTML(data.role)} | 
-                        <strong>Gaya:</strong> ${data.style.toUpperCase()}<br>
-                        <small style="color: var(--text-muted); font-size:11px;">${escapeHTML(data.text.substring(0, 60))}...</small>
+                <div class="admin-item-row" style="display:flex; justify-content:between; align-items:center; background:rgba(255,255,255,0.05); padding:10px; margin-bottom:5px; border-radius:6px;">
+                    <div style="flex:1;">
+                        <strong>Tag:</strong> ${escapeHTML(data.role)} | <strong>Gaya:</strong> ${data.style.toUpperCase()}<br>
+                        <small style="color: #9aa5b5; font-size:11px;">${escapeHTML(data.text.substring(0, 60))}...</small>
                     </div>
-                    <button class="btn-sm-danger" onclick="hapusGovAnnouncement('${data.id}')"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    <button class="btn-sm-danger" onclick="hapusGovAnnouncement('${data.id}')" style="background:#d33; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Hapus</button>
                 </div>
             `;
         }
@@ -226,7 +225,7 @@ db.ref('images_data').on('value', (snapshot) => {
     }
 });
 
-// Sinkronisasi Multi-Media News & Post Categories Filter System
+// Sinkronisasi Multi-Media News
 db.ref('media_posts').on('value', (snapshot) => {
     const targetIDs = ['media-info', 'media-dev', 'media-pemerintahan', 'media-discord', 'media-umum'];
     targetIDs.forEach(id => {
@@ -315,7 +314,7 @@ function addImageData() {
 
 function addMediaData() {
     if(!statusSesiAdmin) return;
-    const target = document.getElementById('adm-custom-target') ? document.getElementById('adm-custom-target').value : document.getElementById('adm-med-target').value;
+    const target = document.getElementById('adm-med-target').value;
     const title = document.getElementById('adm-med-title').value.trim();
     const img = document.getElementById('adm-med-img').value.trim();
     const text = document.getElementById('adm-med-text').value.trim();
@@ -374,11 +373,14 @@ function loginAdmin() {
         const credentials = result.value;
         if(credentials.user === "admin" && credentials.pass === "jayakarta2026") {
             statusSesiAdmin = true;
-            switchView('admin');
             
-            // Memicu trigger render ulang data kelola internal panel admin
-            db.ref('pejabat').off(); db.ref('images_data').off(); db.ref('media_posts').off();
-            db.ref('pejabat').on('value', () => {}); db.ref('images_data').on('value', () => {}); db.ref('media_posts').on('value', () => {});
+            // Pindah halaman ke Panel Admin
+            if (typeof switchView === "function") {
+                switchView('admin');
+            }
+            
+            // Memicu paksa render ulang daftar kelola admin
+            db.ref('gov_announcements').setValue = db.ref('gov_announcements').push().parent.getKey();
             
             Swal.fire("Akses Diterima", "Selamat datang kembali Owner / Admin Utama.", "success");
         } else {
@@ -389,7 +391,9 @@ function loginAdmin() {
 
 function logoutAdmin() {
     statusSesiAdmin = false;
-    switchView('home');
+    if (typeof switchView === "function") {
+        switchView('home');
+    }
     Swal.fire("Logged Out", "Sesi kendali administrator berhasil ditutup dengan aman.", "info");
 }
 
@@ -410,7 +414,6 @@ function startSliderEngine() {
     }, 5000);
 }
 
-// Media Viewer Fullscreen Lightbox Pop Up
 function viewImageFull(urlTautan) {
     Swal.fire({
         imageUrl: urlTautan,
@@ -422,7 +425,6 @@ function viewImageFull(urlTautan) {
     });
 }
 
-// Anti-XSS Injection Safe String Filter Protection HTML
 function escapeHTML(str) {
     if (!str) return '';
     return str.replace(/[&<>"']/g, function(m) {
@@ -436,7 +438,6 @@ function escapeHTML(str) {
     });
 }
 
-// Scroll Intersection Watcher Trigger Engine Pack Animasi CSS
 document.addEventListener("DOMContentLoaded", () => {
     startSliderEngine();
     
@@ -450,4 +451,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
 });
-      
+

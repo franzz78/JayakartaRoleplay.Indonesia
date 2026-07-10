@@ -12,44 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
-    <style>
-        /* FIX STYLING UTAMAKAN VISIBILITAS VIEW */
-        .view-active {
-            display: block !important;
-            opacity: 1 !important;
-            visibility: visible !important;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .view-hidden {
-            display: none !important;
-            visibility: hidden !important;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Nav Shortcut khusus Announcement */
-        .btn-nav-gov {
-            background: #eab308;
-            color: #000 !important;
-            font-weight: 700;
-            padding: 8px 14px;
-            border-radius: 6px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            border: none;
-            transition: 0.2s;
-        }
-        .btn-nav-gov:hover {
-            background: #facc15;
-            transform: scale(1.05);
-        }
-    </style>
 </head>
 <body>
 
@@ -116,12 +78,12 @@
             </div>
 
             <div style="text-align: center; margin: 35px 0;">
-                <button onclick="switchView('gov-announce')" style="background: #eab308; color: #000; font-weight: 800; border: none; padding: 16px 32px; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 16px; box-shadow: 0 0 20px rgba(234,179,8,0.3); transition: 0.2s;">
+                <button onclick="switchView('gov-announce')" class="btn-jumbo-gov">
                     <i class="fa-solid fa-bullhorn"></i> BUKA MENU ANNOUNCEMENT GOVERNMENT
                 </button>
             </div>
 
-            <div class="join-box scroll-anim appear">
+            <div class="join-box scroll-anim">
                 <h3>Bergabung Bersama Kami</h3>
                 <p>Rasakan pengalaman ber-roleplay yang realistis, aman, dan seru di Server Indonesia.</p>
                 <a href="https://discord.gg/9VC5UFewb4" target="_blank" class="btn-discord">
@@ -131,69 +93,41 @@
         </section>
 
         <section id="view-gov-announce" class="view-hidden">
-            <h2 style="color: #eab308; border-bottom: 2px solid #eab308; padding-bottom: 10px; margin-bottom: 25px;"><i class="fa-solid fa-bullhorn"></i> Announcement Government</h2>
-            <div id="ctx-gov-announce" style="display: flex; flex-direction: column; gap: 20px;">
+            <h2 class="section-title"><i class="fa-solid fa-bullhorn"></i> Announcement Government</h2>
+            <div id="ctx-gov-announce" class="embed-container">
                 </div>
         </section>
 
         <section id="view-profile-comm" class="view-hidden">
             <h2>Profile Community</h2>
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-body" id="ctx-profile-comm">Memuat data dari database...</div>
+            <div class="card">
+                <div class="card-body" id="ctx-profile-comm">Memuat data...</div>
             </div>
         </section>
 
         <section id="view-pejabat" class="view-hidden">
             <h2>Profile Pejabat Negara</h2>
-            <div class="pejabat-grid" id="ctx-pejabat" style="margin-top: 25px;"></div>
+            <div class="pejabat-grid" id="ctx-pejabat"></div>
         </section>
 
         <section id="view-sejarah" class="view-hidden">
             <h2>Sejarah Community</h2>
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-body" id="ctx-sejarah">Memuat data sejarah...</div>
+            <div class="card">
+                <div class="card-body" id="ctx-sejarah">Memuat data...</div>
             </div>
         </section>
 
         <section id="view-images-public" class="view-hidden">
             <h2>Images Public</h2>
-            <div class="image-gallery" id="ctx-images-public" style="margin-top: 25px;"></div>
+            <div class="image-gallery" id="ctx-images-public"></div>
         </section>
 
-        <section id="view-media-info" class="view-hidden">
-            <h2>Media Information</h2>
-            <div class="media-container" id="ctx-media-info" style="margin-top: 25px;"></div>
-        </section>
-
-        <section id="view-media-dev" class="view-hidden">
-            <h2>Media Development</h2>
-            <div class="media-container" id="ctx-media-dev" style="margin-top: 25px;"></div>
-        </section>
-
-        <section id="view-media-pemerintahan" class="view-hidden">
-            <h2>Media Pemerintahan</h2>
-            <div class="media-container" id="ctx-media-pemerintahan" style="margin-top: 25px;"></div>
-        </section>
-
-        <section id="view-media-discord" class="view-hidden">
-            <h2>Media Discord</h2>
-            <div class="media-container" id="ctx-media-discord" style="margin-top: 25px;"></div>
-        </section>
-
-        <section id="view-media-umum" class="view-hidden">
-            <h2>Media Umum</h2>
-            <div class="media-container" id="ctx-media-umum" style="margin-top: 25px;"></div>
-        </section>
-
-        <section id="view-settings" class="view-hidden">
-            <h2>Settings</h2>
-            <div class="card" style="margin-top: 20px;">
-                <div class="card-body">
-                    <h3>Coming Soon</h3>
-                    <p style="color: var(--text-muted); margin-top: 5px;">Kustomisasi tema dan preferensi pengguna sedang disiapkan.</p>
-                </div>
-            </div>
-        </section>
+        <section id="view-media-info" class="view-hidden"><h2>Media Information</h2><div class="media-container" id="ctx-media-info"></div></section>
+        <section id="view-media-dev" class="view-hidden"><h2>Media Development</h2><div class="media-container" id="ctx-media-dev"></div></section>
+        <section id="view-media-pemerintahan" class="view-hidden"><h2>Media Pemerintahan</h2><div class="media-container" id="ctx-media-pemerintahan"></div></section>
+        <section id="view-media-discord" class="view-hidden"><h2>Media Discord</h2><div class="media-container" id="ctx-media-discord"></div></section>
+        <section id="view-media-umum" class="view-hidden"><h2>Media Umum</h2><div class="media-container" id="ctx-media-umum"></div></section>
+        <section id="view-settings" class="view-hidden"><h2>Settings</h2><div class="card"><div class="card-body"><h3>Coming Soon</h3></div></div></section>
 
         <section id="view-admin" class="view-hidden">
             <div class="card">
@@ -202,87 +136,68 @@
                     <button class="btn-danger" onclick="logoutAdmin()">Logout Panel</button>
                 </div>
 
-                <div style="margin-bottom: 40px; background: rgba(234, 179, 8, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(234, 179, 8, 0.2);">
-                    <h3 style="color: #eab308; margin-bottom: 15px;"><i class="fa-solid fa-bullhorn"></i> Publish Announcement Government (Embed Mode)</h3>
+                <div class="admin-gov-box">
+                    <h3><i class="fa-solid fa-bullhorn"></i> Publish Announcement Government</h3>
                     <div class="form-group">
-                        <label style="display:block; margin-bottom:5px; font-weight:600;">Custom Tag Role</label>
-                        <input type="text" id="adm-gov-role" placeholder="Contoh: @Warga Jayakarta, @All Staff" style="width:100%; padding:12px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px; font-family:'Poppins', sans-serif;">
+                        <label>Custom Tag Role</label>
+                        <input type="text" id="adm-gov-role" placeholder="Contoh: @Warga Jayakarta, @Everyone">
                         
-                        <label style="display:block; margin-bottom:5px; font-weight:600;">Pilih Gaya Tulisan Pesan</label>
-                        <select id="adm-gov-style" style="width:100%; padding:12px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px; font-family:'Poppins', sans-serif;">
-                            <option value="tebal">Teks Jelas & Tebal Putih</option>
-                            <option value="code">Format Blok Kode (```text```)</option>
+                        <label>Pilih Gaya Tampilan Pesan</label>
+                        <select id="adm-gov-style">
+                            <option value="tebal">Teks Jelas & Bold Putih</option>
+                            <option value="code">Blok Format Kode (```text```)</option>
                         </select>
 
-                        <label style="display:block; margin-bottom:5px; font-weight:600;">Pesan Informasi Publik (Longtext - Tanpa Batas Teks)</label>
-                        <textarea id="adm-gov-text" rows="6" placeholder="Ketik isi pengumuman pemerintahan secara manual disini..." style="width:100%; padding:12px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px; font-family:'Poppins', sans-serif; resize:vertical;"></textarea>
+                        <label>Pesan Informasi Pengumuman (Bisa Longtext / Tanpa Batas)</label>
+                        <textarea id="adm-gov-text" rows="6" placeholder="Ketik pengumuman manual di sini..."></textarea>
                         
-                        <button onclick="addGovAnnouncement()" style="background: #eab308; color: #000; font-weight:700; border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-family:'Poppins', sans-serif;">Publish Embed Pengumuman</button>
+                        <button class="btn-submit-gov" onclick="addGovAnnouncement()">Publish & Kirim Webhook Discord</button>
                     </div>
-                    <div id="adm-list-gov" class="admin-list-items" style="margin-top: 25px;"></div>
+                    <div id="adm-list-gov" style="margin-top: 20px;"></div>
                 </div>
 
-                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
+                <hr class="neon-line">
 
-                <div style="margin-bottom: 40px;">
-                    <h3><i class="fa-solid fa-file-pen"></i> Kelola Informasi Dasar Website</h3>
+                <div style="margin-bottom: 30px;">
+                    <h3><i class="fa-solid fa-file-pen"></i> Informasi Dasar Website</h3>
                     <div class="form-group">
-                        <label>Profile Komunitas</label>
-                        <textarea id="adm-prof-comm" rows="4"></textarea>
-                        <label>Sejarah Komunitas</label>
-                        <textarea id="adm-sejarah" rows="4"></textarea>
-                        <button onclick="updateTextData()">Simpan Data Deskripsi</button>
+                        <label>Profile</label><textarea id="adm-prof-comm" rows="3"></textarea>
+                        <label>Sejarah</label><textarea id="adm-sejarah" rows="3"></textarea>
+                        <button class="btn-nav-gov" onclick="updateTextData()" style="color:#000!important; margin-top:10px;">Simpan Deskripsi</button>
                     </div>
                 </div>
 
-                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
+                <hr class="neon-line">
 
-                <div style="margin-bottom: 40px;">
-                    <h3><i class="fa-solid fa-user-plus"></i> Struktur Birokrasi Pejabat Negara</h3>
+                <div style="margin-bottom: 30px;">
+                    <h3><i class="fa-solid fa-user-plus"></i> Struktur Birokrasi Pejabat</h3>
                     <div class="form-inline">
-                        <input type="text" id="adm-pjb-jabatan" placeholder="Contoh: [RI-1] PRESIDEN">
-                        <input type="text" id="adm-pjb-nama" placeholder="Nama Lengkap Pejabat">
-                        <input type="text" id="adm-pjb-img" placeholder="URL Foto Link Pejabat">
-                        <button onclick="addPejabat()">Tambah Struktur</button>
+                        <input type="text" id="adm-pjb-jabatan" placeholder="Jabatan">
+                        <input type="text" id="adm-pjb-nama" placeholder="Nama">
+                        <input type="text" id="adm-pjb-img" placeholder="URL Foto">
+                        <button class="btn-nav-gov" onclick="addPejabat()" style="color:#000!important;">Tambah</button>
                     </div>
                     <div id="adm-list-pejabat" class="admin-list-items"></div>
                 </div>
 
-                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
-
-                <div style="margin-bottom: 40px;">
-                    <h3><i class="fa-solid fa-images"></i> Kelola Unggahan Gambar Visual</h3>
-                    <div class="form-inline">
-                        <input type="text" id="adm-img-url" placeholder="URL Tautan Gambar Direct Link">
-                        <select id="adm-img-type">
-                            <option value="slideshow">Jadikan Banner Slide Home</option>
-                            <option value="public">Jadikan Gambar Galeri Publik</option>
-                        </select>
-                        <button onclick="addImageData()">Simpan Unggahan Gambar</button>
-                    </div>
-                    <div id="adm-list-images" class="admin-list-items"></div>
-                </div>
-
-                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
+                <hr class="neon-line">
 
                 <div>
-                    <h3><i class="fa-solid fa-photo-film"></i> Publish Artikel Konten Multi-Media</h3>
+                    <h3><i class="fa-solid fa-images"></i> Media Galeri & Artikel</h3>
                     <div class="form-group">
-                        <label>Pilih Target Menu Halaman</label>
+                        <label>Target Kategori</label>
                         <select id="adm-med-target">
                             <option value="media-info">Media Information</option>
                             <option value="media-dev">Media Development</option>
                             <option value="media-pemerintahan">Media Pemerintahan</option>
-                            <option value="media-discord">Media Discord</option>
-                            <option value="media-umum">Media Umum</option>
                         </select>
-                        <input type="text" id="adm-med-title" placeholder="Judul Postingan/Artikel Berita">
-                        <input type="text" id="adm-med-img" placeholder="URL Link Gambar Pendukung (Opsional)">
-                        <textarea id="adm-med-text" rows="4" placeholder="Ketik isi teks informasi berita disini..."></textarea>
-                        <button onclick="addMediaData()">Publish Berita Sekarang</button>
+                        <input type="text" id="adm-med-title" placeholder="Judul Berita">
+                        <textarea id="adm-med-text" rows="3" placeholder="Isi Konten Berita"></textarea>
+                        <button class="btn-nav-gov" onclick="addMediaData()" style="color:#000!important; margin-top:10px;">Publish Artikel</button>
                     </div>
                     <div id="adm-list-media" class="admin-list-items"></div>
                 </div>
+
             </div>
         </section>
 
@@ -294,60 +209,45 @@
         document.getElementById('menuToggle').addEventListener('click', () => sidebar.classList.add('open'));
         document.getElementById('closeBtn').addEventListener('click', () => sidebar.classList.remove('open'));
 
-        // Logika Ganti Halaman (SANGAT KETAT & ANTI-LOCK)
         function switchView(viewId) {
-            const sections = document.querySelectorAll('.content-wrapper section');
-            sections.forEach(sec => {
-                sec.className = 'view-hidden';
-            });
-            
+            document.querySelectorAll('.content-wrapper section').forEach(sec => sec.className = 'view-hidden');
             const target = document.getElementById(`view-${viewId}`);
-            if(target) {
-                target.className = 'view-active';
-            }
+            if(target) target.className = 'view-active';
             if(sidebar) sidebar.classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // BACKSOUND PLAYER CONTROLLER
+        // Background Music Handlers
         const bgMusic = document.getElementById('globalBgMusic');
         const vinylDisk = document.getElementById('vinylDisk');
         const vinylStatus = document.querySelector('.vinyl-container .vinyl-status');
 
-        function paksaPutarMusik() {
+        function triggerMusic() {
             bgMusic.play().then(() => {
-                if (vinylDisk) vinylDisk.classList.add('spinning');
-                if (vinylStatus) vinylStatus.innerText = "Playing";
-                leburSemuaEventListener();
-            }).catch(error => {
-                console.log("Menunggu interaksi awal...", error);
-            });
+                if(vinylDisk) vinylDisk.classList.add('spinning');
+                if(vinylStatus) vinylStatus.innerText = "Playing";
+                clearMusicListeners();
+            }).catch(() => {});
         }
 
-        function leburSemuaEventListener() {
-            document.removeEventListener('click', paksaPutarMusik);
-            document.removeEventListener('touchstart', paksaPutarMusik);
-            document.removeEventListener('pointerdown', paksaPutarMusik);
-            document.removeEventListener('scroll', paksaPutarMusik);
+        function clearMusicListeners() {
+            ['click','touchstart','pointerdown','scroll'].forEach(e => document.removeEventListener(e, triggerMusic));
         }
-
-        document.addEventListener('click', paksaPutarMusik);
-        document.addEventListener('touchstart', paksaPutarMusik);
-        document.addEventListener('pointerdown', paksaPutarMusik);
-        document.addEventListener('scroll', paksaPutarMusik, { passive: true });
+        ['click','touchstart','pointerdown','scroll'].forEach(e => document.addEventListener(e, triggerMusic, {passive:true}));
 
         function toggleAudioGlobal() {
-            leburSemuaEventListener();
+            clearMusicListeners();
             if (bgMusic.paused) {
                 bgMusic.play();
-                if (vinylDisk) vinylDisk.classList.add('spinning');
-                if (vinylStatus) vinylStatus.innerText = "Playing";
+                vinylDisk.classList.add('spinning');
+                vinylStatus.innerText = "Playing";
             } else {
                 bgMusic.pause();
-                if (vinylDisk) vinylDisk.classList.remove('spinning');
-                if (vinylStatus) vinylStatus.innerText = "Mute";
+                vinylDisk.classList.remove('spinning');
+                vinylStatus.innerText = "Mute";
             }
         }
     </script>
 </body>
 </html>
+

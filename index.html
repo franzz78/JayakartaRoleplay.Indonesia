@@ -55,6 +55,7 @@
         <div class="close-btn" id="closeBtn"><i class="fa-solid fa-xmark"></i></div>
         <ul class="nav-links">
             <li><a href="#" onclick="switchView('home')"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#" onclick="switchView('gov-announce')"><i class="fa-solid fa-bullhorn"></i> Announcement Government</a></li>
             <li><a href="#" onclick="switchView('profile-comm')"><i class="fa-solid fa-users"></i> Profile Community</a></li>
             <li><a href="#" onclick="switchView('pejabat')"><i class="fa-solid fa-user-tie"></i> Profile Pejabat Negara</a></li>
             <li><a href="#" onclick="switchView('sejarah')"><i class="fa-solid fa-book-open"></i> Sejarah Community</a></li>
@@ -91,6 +92,14 @@
                 <a href="https://discord.gg/9VC5UFewb4" target="_blank" class="btn-discord">
                     <i class="fa-brands fa-discord"></i> Join Komunitas Discord
                 </a>
+            </div>
+        </section>
+
+        <!-- SECTION: ANNOUNCEMENT GOVERNMENT (EMBED MODE) -->
+        <section id="view-gov-announce" class="view-hidden">
+            <h2>Announcement Government</h2>
+            <div id="ctx-gov-announce" style="margin-top: 25px; display: flex; flex-direction: column; gap: 20px;">
+                <!-- Konten Embed Pengumuman Muncul Di Sini Secara Dinamis Dari Firebase -->
             </div>
         </section>
 
@@ -174,6 +183,29 @@
                     <h2><i class="fa-solid fa-user-shield"></i> Administrator Dashboard</h2>
                     <button class="btn-danger" onclick="logoutAdmin()">Logout Panel</button>
                 </div>
+
+                <!-- NEW: EDITOR ANNOUNCEMENT GOVERNMENT -->
+                <div style="margin-bottom: 40px; background: rgba(234, 179, 8, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(234, 179, 8, 0.2);">
+                    <h3 style="color: #eab308;"><i class="fa-solid fa-bullhorn"></i> Publish Announcement Government (Embed Mode)</h3>
+                    <div class="form-group">
+                        <label>Custom Tag Role</label>
+                        <input type="text" id="adm-gov-role" placeholder="Contoh: @Warga Jayakarta, @All Staff">
+                        
+                        <label>Pilih Gaya Tulisan Pesan</label>
+                        <select id="adm-gov-style">
+                            <option value="tebal">Teks Jelas & Tebal Putih</option>
+                            <option value="code">Format Blok Kode (```text```)</option>
+                        </select>
+
+                        <label>Pesan Informasi Publik (Longtext - Tanpa Batas Teks)</label>
+                        <textarea id="adm-gov-text" rows="6" placeholder="Ketik isi pengumuman pemerintahan secara manual disini..."></textarea>
+                        
+                        <button onclick="addGovAnnouncement()" style="background: #eab308; color: #000;">Publish Embed Pengumuman</button>
+                    </div>
+                    <div id="adm-list-gov" class="admin-list-items"></div>
+                </div>
+
+                <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
 
                 <!-- Profile & Sejarah Teks Editor -->
                 <div style="margin-bottom: 40px;">
@@ -272,14 +304,10 @@
         const vinylDisk = document.getElementById('vinylDisk');
         const vinylStatus = document.querySelector('.vinyl-container .vinyl-status');
 
-        // Fungsi utama untuk memaksa musik berputar sesegera mungkin
         function paksaPutarMusik() {
             bgMusic.play().then(() => {
-                // Sukses berputar saat mendeteksi interaksi pertama user
                 if (vinylDisk) vinylDisk.classList.add('spinning');
                 if (vinylStatus) vinylStatus.innerText = "Playing";
-                
-                // Lepaskan event listener agar tidak bentrok atau mengulang trigger saat diklik lagi
                 leburSemuaEventListener();
             }).catch(error => {
                 console.log("Menunggu aksi interaksi pertama pengunjung untuk memicu audio...", error);
@@ -293,15 +321,13 @@
             document.removeEventListener('scroll', paksaPutarMusik);
         }
 
-        // Jebakan multi-event agar lagu langsung nyala begitu layar disentuh, diklik, atau discroll
         document.addEventListener('click', paksaPutarMusik);
         document.addEventListener('touchstart', paksaPutarMusik);
         document.addEventListener('pointerdown', paksaPutarMusik);
         document.addEventListener('scroll', paksaPutarMusik, { passive: true });
 
-        // Fungsi manual klik piringan hitam di Navbar (Bisa on/off kapan saja)
         function toggleAudioGlobal() {
-            leburSemuaEventListener(); // Hancurkan pelacak otomatis jika user klik manual tombolnya
+            leburSemuaEventListener();
             if (bgMusic.paused) {
                 bgMusic.play();
                 if (vinylDisk) vinylDisk.classList.add('spinning');
@@ -313,7 +339,6 @@
             }
         }
 
-        // Registrasi Service Worker PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(err => console.log(err));
         }

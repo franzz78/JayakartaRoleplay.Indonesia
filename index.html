@@ -16,6 +16,22 @@
     <!-- Firebase Legacy SDK (CDN Asli Bawaan Server Lu) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    
+    <style>
+        /* CSS INLINE TAMBAHAN UNTUK MEMASTIKAN VIEW DI JAMIN MUNCUL */
+        .view-active {
+            display: block !important;
+            opacity: 1 !important;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .view-hidden {
+            display: none !important;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
@@ -74,7 +90,7 @@
     <main class="content-wrapper">
         
         <!-- SECTION: HOME -->
-        <section id="view-home" class="view-active fade-in">
+        <section id="view-home" class="view-active">
             <!-- Dynamic Real-time Slider Container -->
             <div class="slider-container" id="sliderContainer">
                 <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1000');">
@@ -83,6 +99,13 @@
                         <p>Komunitas Roleplay Terbaik di Indonesia</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Tombol Pintas Darurat Menuju Halaman Announcement -->
+            <div style="text-align: center; margin: 20px 0;">
+                <button onclick="switchView('gov-announce')" style="background: #eab308; color: #000; font-weight: 700; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: 'Poppins', sans-serif;">
+                    <i class="fa-solid fa-bullhorn"></i> LIHAT ANNOUNCEMENT GOVERNMENT
+                </button>
             </div>
 
             <!-- Call to Action Link Discord -->
@@ -97,8 +120,8 @@
 
         <!-- SECTION: ANNOUNCEMENT GOVERNMENT (EMBED MODE) -->
         <section id="view-gov-announce" class="view-hidden">
-            <h2>Announcement Government</h2>
-            <div id="ctx-gov-announce" style="margin-top: 25px; display: flex; flex-direction: column; gap: 20px;">
+            <h2 style="color: #eab308; border-bottom: 2px solid #eab308; padding-bottom: 10px; margin-bottom: 20px;"><i class="fa-solid fa-bullhorn"></i> Announcement Government</h2>
+            <div id="ctx-gov-announce" style="display: flex; flex-direction: column; gap: 20px;">
                 <!-- Konten Embed Pengumuman Muncul Di Sini Secara Dinamis Dari Firebase -->
             </div>
         </section>
@@ -184,25 +207,25 @@
                     <button class="btn-danger" onclick="logoutAdmin()">Logout Panel</button>
                 </div>
 
-                <!-- NEW: EDITOR ANNOUNCEMENT GOVERNMENT -->
+                <!-- EDITOR ANNOUNCEMENT GOVERNMENT -->
                 <div style="margin-bottom: 40px; background: rgba(234, 179, 8, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(234, 179, 8, 0.2);">
-                    <h3 style="color: #eab308;"><i class="fa-solid fa-bullhorn"></i> Publish Announcement Government (Embed Mode)</h3>
+                    <h3 style="color: #eab308; margin-bottom: 15px;"><i class="fa-solid fa-bullhorn"></i> Publish Announcement Government (Embed Mode)</h3>
                     <div class="form-group">
-                        <label>Custom Tag Role</label>
-                        <input type="text" id="adm-gov-role" placeholder="Contoh: @Warga Jayakarta, @All Staff">
+                        <label style="display:block; margin-bottom:5px; font-weight:600;">Custom Tag Role</label>
+                        <input type="text" id="adm-gov-role" placeholder="Contoh: @Warga Jayakarta, @All Staff" style="width:100%; padding:10px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px;">
                         
-                        <label>Pilih Gaya Tulisan Pesan</label>
-                        <select id="adm-gov-style">
+                        <label style="display:block; margin-bottom:5px; font-weight:600;">Pilih Gaya Tulisan Pesan</label>
+                        <select id="adm-gov-style" style="width:100%; padding:10px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px;">
                             <option value="tebal">Teks Jelas & Tebal Putih</option>
                             <option value="code">Format Blok Kode (```text```)</option>
                         </select>
 
-                        <label>Pesan Informasi Publik (Longtext - Tanpa Batas Teks)</label>
-                        <textarea id="adm-gov-text" rows="6" placeholder="Ketik isi pengumuman pemerintahan secara manual disini..."></textarea>
+                        <label style="display:block; margin-bottom:5px; font-weight:600;">Pesan Informasi Publik (Longtext - Tanpa Batas Teks)</label>
+                        <textarea id="adm-gov-text" rows="6" placeholder="Ketik isi pengumuman pemerintahan secara manual disini..." style="width:100%; padding:10px; background:#1a1f2c; border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:6px; margin-bottom:15px; font-family:'Poppins', sans-serif; resize:vertical;"></textarea>
                         
-                        <button onclick="addGovAnnouncement()" style="background: #eab308; color: #000;">Publish Embed Pengumuman</button>
+                        <button onclick="addGovAnnouncement()" style="background: #eab308; color: #000; font-weight:700; border:none; padding:12px 20px; border-radius:6px; cursor:pointer;">Publish Embed Pengumuman</button>
                     </div>
-                    <div id="adm-list-gov" class="admin-list-items"></div>
+                    <div id="adm-list-gov" class="admin-list-items" style="margin-top: 20px;"></div>
                 </div>
 
                 <hr style="border: none; height: 1px; background: var(--neon-line); margin: 30px 0;">
@@ -283,19 +306,18 @@
         document.getElementById('menuToggle').addEventListener('click', () => sidebar.classList.add('open'));
         document.getElementById('closeBtn').addEventListener('click', () => sidebar.classList.remove('open'));
 
-        // Logika Switch View Menu Tab Halaman
+        // Logika Switch View Menu Tab Halaman (DIOPTIMALKAN KETAT)
         function switchView(viewId) {
             const sections = document.querySelectorAll('.content-wrapper section');
             sections.forEach(sec => {
-                sec.classList.remove('view-active', 'fade-in');
-                sec.classList.add('view-hidden');
+                sec.className = 'view-hidden'; // Sembunyikan semuanya
             });
+            
             const target = document.getElementById(`view-${viewId}`);
             if(target) {
-                target.classList.remove('view-hidden');
-                target.classList.add('view-active', 'fade-in');
+                target.className = 'view-active'; // Paksa Tampilkan Target View
             }
-            sidebar.classList.remove('open');
+            if(sidebar) sidebar.classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -310,7 +332,7 @@
                 if (vinylStatus) vinylStatus.innerText = "Playing";
                 leburSemuaEventListener();
             }).catch(error => {
-                console.log("Menunggu aksi interaksi pertama pengunjung untuk memicu audio...", error);
+                console.log("Menunggu interaksi pertama user...", error);
             });
         }
 

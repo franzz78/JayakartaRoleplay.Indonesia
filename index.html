@@ -3,36 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[ID] Jayakarta Roleplay - Website Resmi</title>
+    <title>[ID] Jayakarta Roleplay - Official Web Portal</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#06080c">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Third-Party Core SDK -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
-    <!-- Background Music Player -->
     <audio id="globalBgMusic" loop prefetch="auto">
         <source src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/public/Logo_Website/Sound/vidssave.com%20DJ%20BODY%20PATA%20PATA%20CANTIK%20JELITA%20SLOW%20VIRAL%20TIKTOK%20FULL%20SONG%20MAMAN%20FVNDY%202026%20256KBPS.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- HEADER NAVIGATION BAR -->
     <nav class="navbar">
         <div class="nav-brand">
-            <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/public/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png" class="brand-logo" alt="Logo JRP">
+            <img src="https://tareqwavlgqoexxffuuc.supabase.co/storage/v1/object/public/Logo_Website/Logo_Website/file_00000000a8287207b6664fa6ffeb10b4.png" class="brand-logo" alt="JRP Logo">
             <div class="brand-text">
                 <span class="main-title">JAYAKARTA ROLEPLAY</span>
-                <span class="sub-title">Resmi Website Server Utama</span>
+                <span class="sub-title">Server Impian Terbaik Seluruh Indonesia</span>
             </div>
         </div>
         
         <div class="nav-actions">
             <button class="btn-nav-gov" onclick="switchView('gov-announce')">
-                <i class="fa-solid fa-bullhorn animate-flicker"></i> GOV INFO
+                <i class="fa-solid fa-bullhorn pulse-effect"></i> GOV INFO
             </button>
 
             <div class="vinyl-container" id="vinylPlayer" onclick="toggleAudioGlobal()">
@@ -43,176 +41,197 @@
             </div>
 
             <div class="menu-toggle" id="menuToggle">
-                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-bars-staggered"></i>
             </div>
         </div>
     </nav>
 
-    <!-- SIDEBAR NAVIGATION DRAWER -->
     <div class="sidebar" id="sidebar">
-        <div class="close-btn" id="closeBtn"><i class="fa-solid fa-xmark"></i></div>
-        <div class="sidebar-header-title">MAIN NAVIGATION</div>
+        <div class="close-btn" id="closeBtn"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
+        <div class="sidebar-section-title">MAIN SECTIONS</div>
         <ul class="nav-links">
-            <li><a href="#" onclick="switchView('home')"><i class="fa-solid fa-house"></i> Home Dashboard</a></li>
-            <li><a href="#" onclick="switchView('gov-announce')" class="highlight-link"><i class="fa-solid fa-bullhorn"></i> Govt Announcement</a></li>
-            <li><a href="#" onclick="switchView('profile-comm')"><i class="fa-solid fa-users"></i> Profile Community</a></li>
-            <li><a href="#" onclick="switchView('pejabat')"><i class="fa-solid fa-user-tie"></i> Pejabat Negara</a></li>
-            <li><a href="#" onclick="switchView('sejarah')"><i class="fa-solid fa-book-open"></i> Sejarah Kota</a></li>
-            <li><a href="#" onclick="switchView('images-public')"><i class="fa-solid fa-images"></i> Galeri Publik</a></li>
-            <li class="separator">MEDIA CHANNELS</li>
-            <li><a href="#" onclick="switchView('media-info')"><i class="fa-solid fa-circle-info"></i> Media Info</a></li>
-            <li><a href="#" onclick="switchView('media-dev')"><i class="fa-solid fa-code"></i> Media Dev</a></li>
-            <li><a href="#" onclick="switchView('media-pemerintahan')"><i class="fa-solid fa-building-shield"></i> Media Govt</a></li>
-            <li class="separator">SYSTEM CONTROL</li>
-            <li><a href="#" onclick="loginAdmin()" class="admin-link"><i class="fa-solid fa-user-shield"></i> Portal Admin Panel</a></li>
+            <li><a href="#" onclick="switchView('home')"><i class="fa-solid fa-house-chimney"></i> Home Dashboard</a></li>
+            <li><a href="#" onclick="switchView('gov-announce')" class="highlight-link"><i class="fa-solid fa-bullhorn"></i> Announcement Govt</a></li>
+            <li><a href="#" onclick="switchView('profile-comm')"><i class="fa-solid fa-users-gear"></i> Profile Community</a></li>
+            <li><a href="#" onclick="switchView('pejabat')"><i class="fa-solid fa-user-tie"></i> Profile Pejabat Negara</a></li>
+            <li><a href="#" onclick="switchView('sejarah')"><i class="fa-solid fa-monument"></i> Sejarah Community</a></li>
+            <li><a href="#" onclick="switchView('images-public')"><i class="fa-solid fa-images"></i> Images Public Gallery</a></li>
+            
+            <div class="sidebar-section-title">MEDIA CHANNELS</div>
+            <li><a href="#" onclick="switchView('media-info')"><i class="fa-solid fa-circle-info"></i> Media Information</a></li>
+            <li><a href="#" onclick="switchView('media-dev')"><i class="fa-solid fa-laptop-code"></i> Media Development</a></li>
+            <li><a href="#" onclick="switchView('media-pemerintahan')"><i class="fa-solid fa-building-shield"></i> Media Pemerintahan</a></li>
+            <li><a href="#" onclick="switchView('media-discord')"><i class="fa-brands fa-discord"></i> Media Discord</a></li>
+            <li><a href="#" onclick="switchView('media-umum')"><i class="fa-solid fa-earth-southeast"></i> Media Umum</a></li>
+            
+            <div class="sidebar-section-title">SETTING & UTILITIES</div>
+            <li><a href="#" onclick="switchView('settings')"><i class="fa-solid fa-sliders"></i> System Settings</a></li>
+            <li><a href="#" onclick="loginAdmin()" class="admin-link-highlight"><i class="fa-solid fa-shield-halved"></i> Administrator Area</a></li>
         </ul>
     </div>
 
-    <!-- MAIN APP WRAPPER CONTAINER -->
     <main class="content-wrapper">
         
-        <!-- MODULE: HOME VIEW -->
         <section id="view-home" class="view-active">
-            <div class="hero-banner">
-                <div class="hero-overlay">
-                    <h1>WELCOME TO JAYAKARTA</h1>
-                    <p>Kota Impian Ter-Realistis, Disiplin, dan Berwibawa Seluruh Indonesia</p>
-                    <button onclick="switchView('gov-announce')" class="btn-jumbo-gov">
-                        <i class="fa-solid fa-circle-dot"></i> MASUK KE MENU UTAMA PENGUMUMAN PEMERINTAHAN
-                    </button>
+            <div class="slider-wrapper">
+                <div class="slider-container" id="sliderContainer">
+                    <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(6,8,12,0.95)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=1200');">
+                        <div class="slide-content">
+                            <h2>[ID] JAYAKARTA ROLEPLAY</h2>
+                            <p>Kota Impian Berwibawa & Struktur Pemerintahan Realistis Terbesar</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="join-box">
-                <div class="join-icon"><i class="fa-brands fa-discord"></i></div>
-                <div class="join-text">
-                    <h3>Bergabunglah Bersama Sektor Keamanan & Warga</h3>
-                    <p>Ambil peran penting, patuhi regulasi hukum negara, jalani takdir karakter lu di server roleplay terbaik.</p>
+            <div class="jumbo-action-zone">
+                <button onclick="switchView('gov-announce')" class="btn-jumbo-gov">
+                    <i class="fa-solid fa-circle-dot"></i> BUKA HALAMAN ANNOUNCEMENT GOVERNMENT
+                </button>
+            </div>
+
+            <div class="join-discord-card">
+                <div class="join-details">
+                    <h3>Bergabunglah Bersama Komunitas Kami</h3>
+                    <p>Rasakan kebebasan bermain peran secara dinamis, profesional, aman, dan tanpa batas di server kami.</p>
                 </div>
                 <a href="https://discord.gg/9VC5UFewb4" target="_blank" class="btn-discord">
-                    JOIN DISCORD SERVER
+                    <i class="fa-brands fa-discord"></i> MASUK DISCORD UTAMA
                 </a>
             </div>
         </section>
 
-        <!-- MODULE: ANNOUNCEMENT GOVERNMENT -->
         <section id="view-gov-announce" class="view-hidden">
-            <div class="page-header">
+            <div class="view-header-banner">
                 <h2><i class="fa-solid fa-bullhorn"></i> ANNOUNCEMENT GOVERNMENT</h2>
-                <p>Arsip Dokumentasi & Pengumuman Resmi Enkripsi Pemerintah Pusat</p>
+                <p>Arsip Maklumat, Regulasi, dan Pengumuman Terenkripsi Milik Pemerintah Pusat</p>
             </div>
-            <div id="ctx-gov-announce" class="embed-stream-container">
-                <!-- Data Firebase Mengalir Ke Sini -->
-            </div>
+            <div id="ctx-gov-announce" class="embed-layout-stack">
+                </div>
         </section>
 
-        <!-- MODULE: PROFILE COMMUNITY -->
         <section id="view-profile-comm" class="view-hidden">
-            <div class="page-header"><h2><i class="fa-solid fa-users"></i> PROFILE COMMUNITY</h2></div>
-            <div class="premium-card"><div class="card-body" id="ctx-profile-comm">Memuat basis data profile...</div></div>
+            <div class="view-header-banner"><h2><i class="fa-solid fa-users-gear"></i> PROFILE COMMUNITY</h2></div>
+            <div class="premium-neon-card"><div class="card-inner-text" id="ctx-profile-comm">Menghubungkan ke basis data...</div></div>
         </section>
 
-        <!-- MODULE: PROFILE PEJABAT NEGARA -->
         <section id="view-pejabat" class="view-hidden">
-            <div class="page-header"><h2><i class="fa-solid fa-user-tie"></i> PEJABAT NEGARA</h2></div>
-            <div class="grid-layout" id="ctx-pejabat"></div>
+            <div class="view-header-banner"><h2><i class="fa-solid fa-user-tie"></i> PEJABAT NEGARA</h2></div>
+            <div class="responsive-pejabat-grid" id="ctx-pejabat"></div>
         </section>
 
-        <!-- MODULE: SEJARAH COMMUNITY -->
         <section id="view-sejarah" class="view-hidden">
-            <div class="page-header"><h2><i class="fa-solid fa-book-open"></i> SEJARAH KOTA</h2></div>
-            <div class="premium-card"><div class="card-body" id="ctx-sejarah">Memuat arsip kronologi sejarah...</div></div>
+            <div class="view-header-banner"><h2><i class="fa-solid fa-monument"></i> SEJARAH COMMUNITY</h2></div>
+            <div class="premium-neon-card"><div class="card-inner-text" id="ctx-sejarah">Membuka lembar sejarah kota...</div></div>
         </section>
 
-        <!-- MODULE: IMAGES PUBLIC -->
         <section id="view-images-public" class="view-hidden">
-            <div class="page-header"><h2><i class="fa-solid fa-images"></i> GALERI DOKUMENTASI</h2></div>
-            <div class="grid-layout-gallery" id="ctx-images-public"></div>
+            <div class="view-header-banner"><h2><i class="fa-solid fa-images"></i> IMAGES PUBLIC GALLERY</h2></div>
+            <div class="responsive-gallery-grid" id="ctx-images-public"></div>
         </section>
 
-        <!-- MODULES: MEDIA MANAGEMENT -->
-        <section id="view-media-info" class="view-hidden"><div class="page-header"><h2>MEDIA INFORMATION</h2></div><div class="media-column-stack" id="ctx-media-info"></div></section>
-        <section id="view-media-dev" class="view-hidden"><div class="page-header"><h2>MEDIA DEVELOPMENT</h2></div><div class="media-column-stack" id="ctx-media-dev"></div></section>
-        <section id="view-media-pemerintahan" class="view-hidden"><div class="page-header"><h2>MEDIA PEMERINTAHAN</h2></div><div class="media-column-stack" id="ctx-media-pemerintahan"></div></section>
+        <section id="view-media-info" class="view-hidden"><div class="view-header-banner"><h2>MEDIA INFORMATION</h2></div><div class="media-flex-column" id="ctx-media-info"></div></section>
+        <section id="view-media-dev" class="view-hidden"><div class="view-header-banner"><h2>MEDIA DEVELOPMENT</h2></div><div class="media-flex-column" id="ctx-media-dev"></div></section>
+        <section id="view-media-pemerintahan" class="view-hidden"><div class="view-header-banner"><h2>MEDIA PEMERINTAHAN</h2></div><div class="media-flex-column" id="ctx-media-pemerintahan"></div></section>
+        <section id="view-media-discord" class="view-hidden"><div class="view-header-banner"><h2>MEDIA DISCORD</h2></div><div class="media-flex-column" id="ctx-media-discord"></div></section>
+        <section id="view-media-umum" class="view-hidden"><div class="view-header-banner"><h2>MEDIA UMUM</h2></div><div class="media-flex-column" id="ctx-media-umum"></div></section>
 
-        <!-- MODULE: CENTRAL ADMINISTRATOR CONTROL DASHBOARD -->
+        <section id="view-settings" class="view-hidden">
+            <div class="view-header-banner"><h2>SYSTEM SETTINGS</h2></div>
+            <div class="premium-neon-card"><div class="card-inner-text"><h3><i class="fa-solid fa-screwdriver-wrench"></i> Interface Configurator Coming Soon</h3></div></div>
+        </section>
+
         <section id="view-admin" class="view-hidden">
-            <div class="premium-card firewall-panel">
-                <div class="admin-panel-header">
-                    <h2><i class="fa-solid fa-user-shield"></i> DASHBOARD KENDALAI UTAMA ADMIN</h2>
-                    <button class="btn-danger-action" onclick="logoutAdmin()"><i class="fa-solid fa-power-off"></i> LOGOUT PANEL</button>
+            <div class="premium-neon-card admin-root-panel">
+                <div class="admin-panel-top-nav">
+                    <h2><i class="fa-solid fa-user-shield"></i> MASTER ADMINISTRATOR COMMAND SYSTEM</h2>
+                    <button class="btn-danger-logout" onclick="logoutAdmin()"><i class="fa-solid fa-power-off"></i> LOCK OUT SESSION</button>
                 </div>
 
-                <!-- PORTAL INTERFACE UTAMA ANNOUNCEMENT SYSTEM -->
-                <div class="admin-feature-box highlight-border">
-                    <h3><i class="fa-solid fa-tower-broadcast"></i> TRANSMIT DATA ANNOUNCEMENT GOVERNMENT</h3>
-                    <p class="box-desc">Input data di bawah ini akan dienkripsi dan dipancarkan langsung ke Web Pengunjung serta Webhook Embed Discord Server secara realtime.</p>
+                <div class="admin-control-card-box highlight-gold-box">
+                    <h3><i class="fa-solid fa-tower-broadcast"></i> BROADCAST NEW ANNOUNCEMENT GOVERNMENT</h3>
+                    <p class="box-subtitle-info">Otomatis melakukan push data ke Database Server JRP sekaligus mentransmisikan struktur Embed ke Webhook Discord lu secara utuh.</p>
                     
-                    <div class="form-container">
-                        <div class="input-block">
-                            <label>PING TARGET ROLE TAG</label>
-                            <input type="text" id="adm-gov-role" placeholder="Contoh: @Everyone, @Warga Jayakarta">
+                    <div class="modern-form-wrapper">
+                        <div class="input-element-block">
+                            <label>TARGET ANNOUNCEMENT ROLE TAG PING</label>
+                            <input type="text" id="adm-gov-role" placeholder="Contoh: @Everyone, @Warga Sipil, @Instansi Pemerintah">
                         </div>
                         
-                        <div class="input-block">
-                            <label>GAYA DESAIN KONTEN TEKS</label>
+                        <div class="input-element-block">
+                            <label>GAYA DAN TAMPILAN FORMAT BLOK PESAN</label>
                             <select id="adm-gov-style">
-                                <option value="tebal">Format Teks Bold & Highlight Putih Terang</option>
-                                <option value="code">Format Blok Kode Enkripsi Terminal Komputer</option>
+                                <option value="tebal">White Highlight & Bold Teks (Standard Embed)</option>
+                                <option value="code">Code Terminal Style Block (```text``` Format)</option>
                             </select>
                         </div>
 
-                        <div class="input-block">
-                            <label>DOKUMEN PESAN UTAMA (MENDUKUNG PARAGRAF PANJANG)</label>
-                            <textarea id="adm-gov-text" rows="7" placeholder="Ketik draf pengumuman resmi pemerintahan di sini..."></textarea>
+                        <div class="input-element-block">
+                            <label>KONTEN ATAU ISI DOKUMEN PENGUMUMAN (Mendukung Teks Tanpa Batas / Paragraf)</label>
+                            <textarea id="adm-gov-text" rows="6" placeholder="Tuliskan isi maklumat resmi negara..."></textarea>
                         </div>
                         
-                        <button class="btn-primary-action" onclick="addGovAnnouncement()">
-                            <i class="fa-solid fa-share-from-square"></i> PUBLISH DATA & TRANSMIT TO DISCORD WEBHOOK
+                        <button class="btn-primary-submit-action" onclick="addGovAnnouncement()">
+                            <i class="fa-solid fa-paper-plane"></i> TRANSMIT DATA & PUBLISH TO ECOSYSTEM
                         </button>
                     </div>
 
-                    <div class="admin-log-title">Log Feed Aktif (Daftar Pengumuman Yang Dapat Dihapus)</div>
-                    <div id="adm-list-gov" class="admin-data-list-scroller"></div>
+                    <div class="admin-inner-log-title">Daftar Arsip Pengumuman Aktif (Dapat Dihapus Dari Server)</div>
+                    <div id="adm-list-gov" class="admin-scrollable-data-view"></div>
                 </div>
 
-                <!-- FITUR KELOLA MODUL TAMBAHAN -->
-                <div class="admin-feature-box">
-                    <h3><i class="fa-solid fa-pen-to-square"></i> EDIT INFORMASI TEKS DASAR</h3>
-                    <div class="form-container">
-                        <div class="input-block"><label>DESKRIPSI PROFIL</label><textarea id="adm-prof-comm" rows="3"></textarea></div>
-                        <div class="input-block"><label>SEJARAH UTAMA</label><textarea id="adm-sejarah" rows="3"></textarea></div>
-                        <button class="btn-secondary-action" onclick="updateTextData()">SIMPAN CONFIG TEKS</button>
+                <div class="admin-control-card-box">
+                    <h3><i class="fa-solid fa-square-pen"></i> MANAGE BASIC PROFILE & HISTORY LOGS</h3>
+                    <div class="modern-form-wrapper">
+                        <div class="input-element-block"><label>DESKRIPSI PROFILE COMMUNITY</label><textarea id="adm-prof-comm" rows="3"></textarea></div>
+                        <div class="input-element-block"><label>KRONOLOGI SEJARAH KOTA</label><textarea id="adm-sejarah" rows="3"></textarea></div>
+                        <button class="btn-secondary-submit-action" onclick="updateTextData()">SIMPAN CONFIG TEXT_DATA</button>
                     </div>
                 </div>
 
-                <div class="admin-feature-box">
-                    <h3><i class="fa-solid fa-id-card-clip"></i> KELOLA STRUKTUR BIROKRASI</h3>
-                    <div class="form-container inline-inputs">
-                        <input type="text" id="adm-pjb-jabatan" placeholder="Nama Jabatan / Pangkat">
-                        <input type="text" id="adm-pjb-nama" placeholder="Nama Personel">
-                        <input type="text" id="adm-pjb-img" placeholder="Tautan Link URL Foto">
-                        <button class="btn-secondary-action" onclick="addPejabat()">TAMBAH DATA</button>
+                <div class="admin-control-card-box">
+                    <h3><i class="fa-solid fa-address-card"></i> MANAGE BIROKRASI PEJABAT NEGARA</h3>
+                    <div class="modern-form-wrapper inline-inputs-grid">
+                        <input type="text" id="adm-pjb-jabatan" placeholder="Nama Pangkat / Jabatan Resmi">
+                        <input type="text" id="adm-pjb-nama" placeholder="Nama Lengkap Personel">
+                        <input type="text" id="adm-pjb-img" placeholder="Tautan Link Tautan Foto / Gambar">
+                        <button class="btn-secondary-submit-action" onclick="addPejabat()">TAMBAH DATA PEJABAT</button>
                     </div>
-                    <div id="adm-list-pejabat" class="admin-data-list-scroller small-scroller"></div>
+                    <div id="adm-list-pejabat" class="admin-scrollable-data-view small-view-height"></div>
                 </div>
 
-                <div class="admin-feature-box">
-                    <h3><i class="fa-solid fa-newspaper"></i> POSTING ARTIKEL MEDIA TIM</h3>
-                    <div class="form-container">
-                        <div class="input-block">
-                            <label>TARGET KATEGORI PAGE</label>
+                <div class="admin-control-card-box">
+                    <h3><i class="fa-solid fa-photo-film"></i> MANAGEMENT IMAGES & HOME SLIDER DYNAMIC</h3>
+                    <div class="modern-form-wrapper inline-inputs-grid">
+                        <input type="text" id="adm-img-url" placeholder="Masukkan Link Tautan URL Gambar">
+                        <select id="adm-img-type">
+                            <option value="public">Tampilkan Pada Halaman Galeri Publik</option>
+                            <option value="slideshow">Tampilkan Sebagai Background Slider Home</option>
+                        </select>
+                        <button class="btn-secondary-submit-action" onclick="addImageData()">UPLOAD DATA LINK</button>
+                    </div>
+                    <div id="adm-list-images" class="admin-scrollable-data-view small-view-height"></div>
+                </div>
+
+                <div class="admin-control-card-box">
+                    <h3><i class="fa-solid fa-folder-plus"></i> MANAGEMENT ARTIKEL & MEDIA NEWS POSTS</h3>
+                    <div class="modern-form-wrapper">
+                        <div class="input-element-block">
+                            <label>TARGET ALOKASI HALAMAN SEKTOR MEDIA</label>
                             <select id="adm-med-target">
                                 <option value="media-info">Media Information</option>
                                 <option value="media-dev">Media Development</option>
                                 <option value="media-pemerintahan">Media Pemerintahan</option>
+                                <option value="media-discord">Media Discord</option>
+                                <option value="media-umum">Media Umum</option>
                             </select>
                         </div>
-                        <input type="text" id="adm-med-title" placeholder="Judul Berita Utama">
-                        <textarea id="adm-med-text" rows="4" placeholder="Konten Lengkap Berita Grafis"></textarea>
-                        <button class="btn-secondary-action" onclick="addMediaData()">PUBLISH BERITA</button>
+                        <input type="text" id="adm-med-title" placeholder="Judul Liputan Berita / Artikel">
+                        <input type="text" id="adm-med-img" placeholder="Tautan Link Gambar Cover Ilustrasi (Opsional / Boleh Kosong)">
+                        <textarea id="adm-med-text" rows="4" placeholder="Ketik narasi/informasi lengkap berita di sini..."></textarea>
+                        <button class="btn-secondary-submit-action" onclick="addMediaData()">PUBLISH MEDIA ARTIKEL</button>
                     </div>
-                    <div id="adm-list-media" class="admin-data-list-scroller small-scroller"></div>
+                    <div id="adm-list-media" class="admin-scrollable-data-view small-view-height"></div>
                 </div>
 
             </div>
@@ -220,7 +239,6 @@
 
     </main>
 
-    <!-- SYSTEM CORE CODE CONTROLLERS -->
     <script src="script.js"></script>
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -237,7 +255,7 @@
             window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
-        // Global Music System Handlers
+        // Background Music Automation Engine Handlers
         const bgMusic = document.getElementById('globalBgMusic');
         const vinylDisk = document.getElementById('vinylDisk');
         const vinylStatus = document.querySelector('.vinyl-container .vinyl-status');
